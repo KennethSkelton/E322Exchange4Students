@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <template>
+    <div class="myClass">I like: </div>
+  </template>
+
+<style>
+    .myClass {
+      color: white;
+      background-color: rgb(62, 72, 223);
+      padding: 20px;
+      text-align: left;
+      margin: 10px;
+    }
+</style>
+
+
+<head>
+
+
+
+
+    <h1>MarketPlace</h1>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+
+
+
+
+<script type="text/javascript" src="./ExampleData.js" ></script>
+<script type="text/javascript" src="./showlist.js"></script>
+
+<script>
+  function showList() {
+
+var myArr = testCreateItems()
+var temp, item, a, i;
+temp = document.getElementsByTagName("template")[0];
+//get the div element from the template:
+item = temp.content.querySelector("div");
+//for each item in the array:
+for (i = 0; i < myArr.length; i++) {
+  //Create a new node, based on the template:
+  a = document.importNode(item, true);
+  //Add data from the array:
+  a.textContent += myArr[i].description
+  //append the new node wherever you like:
+  document.body.appendChild(a);
+  }
+}
+</script>
+
+<body>
+  
+  <button onclick = "displayList()">Show list</button>
+
+</body>
+
+
+</html>

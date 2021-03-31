@@ -13,7 +13,7 @@ app.use(express.json({type: '*/*'}));
 
 // Set your routes
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname +"/HTML/marketplace.html"));
+    res.sendFile(path.join(__dirname +"/marketplace.html"));
 });
 
 app.post('/', function (req, res) {
