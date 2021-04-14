@@ -1,0 +1,190 @@
+
+<body>
+
+
+    <div *ngFor="let note of (notes | async)">
+    
+        <div class = "card">
+          Book <br>
+          Title: {{note.Title|json}}<br>
+          Edition: {{note.Edition|json}}<br>
+          Course Number: {{note.Course_Number|json}}<br>
+          Description: {{note.Description|json}}<br>
+          Price: {{note.Price|json}}<br>
+        </div>
+      </div>
+     
+    
+          
+      <div *ngFor="let sport of (sports | async)">
+       
+          <div class = "card">
+            Sport <br>
+            Title: {{sport.Title|json}}<br>
+            Sport: {{sport.Sport|json}}<br>
+            Weight: {{sport.Weight|json}}<br>
+            Description: {{sport.Description|json}}<br>
+            Price: {{sport.Price|json}}<br>
+          </div>
+      </div>
+    
+          
+          <div  *ngFor="let furn of (furniture | async)">
+           
+              <div class = "card">
+                Furniture <br>
+                Title: {{furn.Title|json}}<br>
+                Category: {{furn.Category|json}}<br>
+                Weight: {{furn.Weight|json}}<br>
+                Color: {{furn.Color|json}}<br>
+                Dimensions: {{furn.Dimension|json}}<br>
+                Description: {{furn.Description|json}}<br>
+                Price: {{furn.Price|json}}<br>
+              </div>
+          </div>
+    
+          
+          <div *ngFor="let cloth of (clothing | async)">
+           
+              <div class = "card">
+                Clothing <br>
+                Title: {{cloth.Title|json}}<br>
+                Category: {{cloth.Category|json}}<br>
+                Size: {{cloth.Size|json}}<br>
+                Color: {{cloth.Color|json}}<br>
+                Description: {{cloth.Description|json}}<br>
+                Price: {{cloth.Price|json}}<br>
+              </div>
+          </div>
+    
+          
+          <div *ngFor="let elect of (electronics | async)">
+           
+              <div class = "card">
+                Electronic <br>
+                Title: {{elect.Title|json}}<br>
+                Category: {{elect.Category|json}}<br>
+                Dimension: {{elect.Dimension|json}}<br>
+                Model: {{elect.Model|json}}<br>
+                Weight: {{elect.Weight|json}}<br>
+                Description: {{elect.Description|json}}<br>
+                Price: {{elect.Price|json}}<br>
+              </div>
+          </div>
+          <style>
+            #sport {
+                display: none
+            }
+            #book {
+                display: none
+            }
+            #furniture {
+                display: none
+            }
+            #clothing {
+                display: none
+            }
+            #electronic {
+                display: none
+            }
+            
+            
+            </style>
+            
+            <div id = "book">
+              <p> Enter information you would like to change in your book listing</p>
+                Book Title:
+                <input [(ngModel)]= "ttitle">
+                Course Number:
+                <input [(ngModel)]= "Ccourse_number">
+                Edition:
+                <input [(ngModel)]= "eedition">
+                Description:
+                <input [(ngModel)]= "Ddescription">
+                Price:
+                <input [(ngModel)]= "Pprice">
+              
+              <button (click)= "updateBook()">Update</button>
+            </div>
+            <div id = "sport">
+              <p> Enter information you would like to change in your sport listing</p>
+                Title:
+                <input [(ngModel)]= "newContent">
+                Sport:
+                <input [(ngModel)]= "Ssport">
+                Weight:
+                <input [(ngModel)]= "Wweight">
+                Description:
+                <input [(ngModel)]= "Ddescription">
+                Price:
+                <input [(ngModel)]= "Pprice">
+              
+              <button (click)= "AddSport()"></button>
+            </div>
+            <div id = "furniture">
+              <p> Enter information you would like to change in your furniture listing</p>
+                Furniture Title:
+                <input [(ngModel)]= "title">
+                Category:
+                <input [(ngModel)]= "Ccategory">
+                Dimensions:
+                <input [(ngModel)]= "Ddimension">
+                Color:
+                <input [(ngModel)]= "Ccolor">
+                Description:
+                <input [(ngModel)]= "Ddescription">
+                Weight:
+                <input [(ngModel)]= "Wweight">
+                Price:
+                <input [(ngModel)]= "Pprice">
+              
+              <button (click)= "AddFurniture()"></button>
+            </div>
+            <div id = "clothing">
+              <p> Enter information you would like to change in your clothing listing</p>
+                Clothing Title:
+                <input [(ngModel)]= "ttitle">
+                Category:
+                <input [(ngModel)]= "Ccategory">
+                Color:
+                <input [(ngModel)]= "Ccolor">
+                Size:
+                <input [(ngModel)]= "Ssize">
+                Description:
+                <input [(ngModel)]= "Ddescription">
+                Price:
+                <input [(ngModel)]= "Pprice">
+              
+              <button (click)= "AddClothing()"></button>
+            </div>
+            <div id = "electronic">
+              <p> Enter information you would like to change in your electronic listing</p>
+                Electronic Title:
+                <input [(ngModel)]= "ttitle">
+                Category:
+                <input [(ngModel)]= "Ccategory">
+                Model:
+                <input [(ngModel)]= "Mmodel">
+                Dimensions:
+                <input [(ngModel)]= "Ddimension">
+                Weight:
+                <input [(ngModel)]= "Wweight">
+                Description:
+                <input [(ngModel)]= "Ddescription">
+                Price:
+                <input [(ngModel)]= "Pprice">
+              
+              <button (click)= "AddElectronic()"></button>
+            </div>
+         
+            
+    
+
+
+
+
+
+
+
+    
+</body>

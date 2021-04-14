@@ -1,0 +1,108 @@
+<style>
+#sport {
+    display: none
+}
+#book {
+    display: block
+}
+#furniture {
+    display: none
+}
+#clothing {
+    display: none
+}
+#electronic {
+    display: none
+}
+
+
+</style>
+
+<body>
+    <button (click)= "bookShow()">Book</button>
+    <button (click)= "sportShow()">Sport</button>
+    <button (click)= "furnitureShow()">Furniture</button>
+    <button (click)= "clothingShow()">Clothing</button>
+    <button (click)= "electronicShow()">Electronic</button>
+
+<div id = "book">
+    Book Title:
+    <input [(ngModel)]= "newContent">
+    Course Number:
+    <input [(ngModel)]= "newCourseNumbers">
+    Edition:
+    <input [(ngModel)]= "edition">
+    Description:
+    <input [(ngModel)]= "description">
+    Price:
+    <input [(ngModel)]= "price">
+  
+  <button (click)= "AddBook()">Add to store</button>
+</div>
+<div id = "sport">
+    Title:
+    <input [(ngModel)]= "newContent">
+    Sport:
+    <input [(ngModel)]= "sport">
+    Weight:
+    <input [(ngModel)]= "weight">
+    Description:
+    <input [(ngModel)]= "description">
+    Price:
+    <input [(ngModel)]= "price">
+  
+  <button (click)= "AddSport()">Add to store</button>
+</div>
+<div id = "furniture">
+    Furniture Title:
+    <input [(ngModel)]= "newContent">
+    Category:
+    <input [(ngModel)]= "category">
+    Dimensions:
+    <input [(ngModel)]= "dimension">
+    Color:
+    <input [(ngModel)]= "color">
+    Description:
+    <input [(ngModel)]= "description">
+    Weight:
+    <input [(ngModel)]= "weight">
+    Price:
+    <input [(ngModel)]= "price">
+  
+  <button (click)= "AddFurniture()">Add to store</button>
+</div>
+<div id = "clothing">
+    Clothing Title:
+    <input [(ngModel)]= "newContent">
+    Category:
+    <input [(ngModel)]= "category">
+    Color:
+    <input [(ngModel)]= "color">
+    Size:
+    <input [(ngModel)]= "size">
+    Description:
+    <input [(ngModel)]= "description">
+    Price:
+    <input [(ngModel)]= "price">
+  
+  <button (click)= "AddClothing()">Add to store</button>
+</div>
+<div id = "electronic">
+    Electronic Title:
+    <input [(ngModel)]= "newContent">
+    Category:
+    <input [(ngModel)]= "category">
+    Model:
+    <input [(ngModel)]= "model">
+    Dimensions:
+    <input [(ngModel)]= "dimension">
+    Weight:
+    <input [(ngModel)]= "weight">
+    Description:
+    <input [(ngModel)]= "description">
+    Price:
+    <input [(ngModel)]= "price">
+  
+  <button (click)= "AddElectronic()">Add to store</button>
+</div>
+</body>
