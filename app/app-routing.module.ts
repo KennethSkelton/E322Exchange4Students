@@ -4,6 +4,7 @@ import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { PostItemComponent } from './post-item/post-item.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'marketplace', pathMatch: 'full'},
   { path: 'marketplace', component: MarketplaceComponent},
   { path: 'post-item', component: PostItemComponent},
 ];

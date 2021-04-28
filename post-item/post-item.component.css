@@ -1,0 +1,171 @@
+div{
+    font-size: 48px;
+    text-align: center;
+  }
+  
+.card-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .card {
+    border-radius: 4px;
+    border: 1px solid #eee;
+    background-color: #fafafa;
+    height: auto;
+    width: 400px;
+    margin-left: 40%;
+    margin-right: 40%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    line-height: 80px;
+    text-align:justify;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+  }
+
+  .card-container .card:not(:last-child) {
+    margin-right: 0;
+  }
+
+  .card.card-small {
+    height: 16px;
+    width: 168px;
+  }
+
+  
+  .icon {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    margin-left: 12px;
+    margin-right: 12px;
+    border-radius: 60px;
+    overflow: hidden;
+    font-size: x-large;
+  }
+  .icon::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    transition: all 0.25s ease;
+    border-radius: 60px;
+  }
+  .tablinks {
+    box-shadow: 0px 1px 14px -7px #3e7327;
+    background:linear-gradient(to bottom, #77b55a 5%, #77ff33 100%);
+    background-color:#77b55a;
+    border-radius:30px;
+    border:1px solid #4b8f29;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:17px;
+    font-weight:bold;
+    padding:10px 18px;
+    text-decoration:none;
+    text-shadow:1px 2px 0px #5b8a3c;
+  }
+  .tablinks:hover {
+    background:linear-gradient(to bottom, #77ff33 5%, #77b55a 100%);
+    background-color:#77ff33;
+  }
+  .icon-book {
+    transition-duration: 0.5s;
+    box-shadow: inset 0 0 0 1px #16A085;
+    background-color:#5bfddd;
+  }
+  .icon-book:hover{
+    box-shadow: inset 0 0 0 60px #16A085;
+  }
+  .icon-sport {
+    transition-duration: 0.5s;
+    box-shadow: inset 0 0 0 1px #1636a0;
+    background-color: #5078ff;
+  }
+  .icon-sport:hover {
+    box-shadow: inset 0 0 0 60px #1636a0;
+  }
+  .icon-furn {
+    transition-duration: 0.5s;
+    box-shadow: inset 0 0 0 1px #a06016;
+    background-color: #ffae51;
+  }
+  .icon-furn:hover {
+    box-shadow: inset 0 0 0 60px #a06016;
+  }
+  .icon-cloth {
+    transition-duration: 0.5s;
+    box-shadow: inset 0 0 0 1px #a01616;
+    background-color: #ff4e4e;
+  }
+  .icon-cloth:hover {
+    box-shadow: inset 0 0 0 60px #a01616;
+  }
+  .icon-elect {
+    transition-duration: 0.5s;
+    box-shadow: inset 0 0 0 1px #bfeb48;
+    background-color: #e5ff9d;
+  }
+  .icon-elect:hover{
+    box-shadow: inset 0 0 0 60px #bfeb48;
+  }
+  h1{
+    padding: 00px;
+    text-align: center;
+    font-size: 72px;
+  }
+  body{
+
+        padding: 00px;
+        text-align: center;
+        font-size: 72px;
+  }
+
+  input{
+      width: 300px;
+      height: 48px;
+      font-size: 48px;
+  }
+  #bookDisplay{
+    font-size: 32px;
+  }
+  #sportDisplay{
+    font-size: 32px;
+  }
+  #furnDisplay{
+    font-size: 32px;
+  }
+  #clothDisplay{
+    font-size: 32px;
+  }
+  #electDisplay{
+    font-size: 32px;
+  }
+  
+  #submit{
+    background-color: #fafafa;
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+  #submit:hover{
+    cursor: pointer;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+  }
+  

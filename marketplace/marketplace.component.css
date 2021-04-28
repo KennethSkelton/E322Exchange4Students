@@ -7,8 +7,38 @@
   }
   #parent {
     display: flex;
-
+    padding-left: 48px;
+    padding-right: 48px;
   }
+  #bookButton{
+    width:305px;
+    height: 108px;
+    font-size: 48px;
+   
+  }
+  #sportButton{
+    width:305px;
+    height: 108px;
+    font-size: 48px;
+  }
+  #furnitureButton{
+    width:305px;
+    height: 108px;
+    font-size: 48px;
+  }
+  #clothingButton{
+    width:305px;
+    height: 108px;
+    font-size: 48px;
+  }
+  #electronicButton{
+    width:305px;
+    height: 108px;
+    font-size: 48px;
+  }
+
+
+
   .card-container {
     display: flex;
     flex-wrap: wrap;
