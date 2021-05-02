@@ -13,6 +13,10 @@ import { PostItemComponent } from './post-item/post-item.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { Router, RouterModule } from '@angular/router';
 import { ViewItemComponent } from './view-item/view-item.component';
+import {enableProdMode} from '@angular/core';
+import { CartComponent } from './cart/cart.component';
+import { LoginComponent } from './login/login.component'
+import { FirebaseService } from './services/firebase.service';
 const config = {
   apiKey: "AIzaSyCaFTRcmiiD6qNy48L1fYcpRMJH96Gnhc4",
   authDomain: "exchange4students-113b5.firebaseapp.com",
@@ -29,7 +33,9 @@ const config = {
     ItemComponent,
     PostItemComponent,
     PageNotFoundComponent,
-    ViewItemComponent
+    ViewItemComponent,
+    CartComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -44,10 +50,12 @@ const config = {
       {path: 'post-item', component: PostItemComponent},
       {path: 'view-item', component: ViewItemComponent},
       {path: 'item', component: ItemComponent},
+      {path: 'cart', component: CartComponent},
+      {path: 'login', component: LoginComponent},
       {path: '**', component: PageNotFoundComponent},
     ]),
   ],
-  providers: [AngularFirestore],
+  providers: [AngularFirestore, FirebaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

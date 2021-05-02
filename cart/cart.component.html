@@ -1,0 +1,14 @@
+<p>cart works!</p>
+<div class = "card-container" *ngFor="let note of (notes | async)">
+    <div class = "card">
+  
+      Book <br>
+      Title: {{note.id|json}}<br>
+      Edition: {{note.Edition|json}}<br>
+      Course Number: {{note.Course_Number|json}}<br>
+      Description: {{note.Description|json}}<br>
+      Price: {{note.Price|json}}<br>
+      
+    </div>
+    <button (click)="deleteFromCart(note)" class="btn red">Remove From Cart</button>
+  </div>

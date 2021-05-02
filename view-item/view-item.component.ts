@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppComponent } from '../app.component';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-view-item',
@@ -26,8 +27,8 @@ export class ViewItemComponent extends AppComponent {
   Mmodel = "";
   type = "";
   edit = "";
-  constructor(public afs: AngularFirestore, private activatedRoute: ActivatedRoute) {
-    super(afs);
+  constructor(public afs: AngularFirestore,public firebaseService: FirebaseService, private activatedRoute: ActivatedRoute) {
+    super(afs, firebaseService);
     this.activatedRoute.queryParams.subscribe((data: any) =>{
       this.ttitle = data.title;
       this.eedition = data.edition;

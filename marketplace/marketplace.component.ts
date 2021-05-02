@@ -6,6 +6,7 @@ import {AppComponent} from '../app.component';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { FirebaseService } from '../services/firebase.service';
 @Component({
   selector: 'app-marketplace',
   templateUrl: './marketplace.component.html',
@@ -14,8 +15,8 @@ import { switchMap } from 'rxjs/operators';
 @Injectable()
 export class MarketplaceComponent extends AppComponent {
 
-  constructor(public afs: AngularFirestore) {
-    super(afs);
+  constructor(public afs: AngularFirestore, public firebaseService : FirebaseService) {
+    super(afs,firebaseService);
   }
     
     ngOnInit() {

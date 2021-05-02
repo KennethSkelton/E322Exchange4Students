@@ -277,16 +277,18 @@
     <div id = "parent">
       
     <div class = "card-container" *ngFor="let note of (notes | async)">
-    
       <div [routerLink]="['/view-item']" [queryParams]="{title:note.Title,edition:note.Edition,
     course_number:note.Course_Number,description:note.Description,price:note.Price,type:'Book'}" class = "card">
+    
         Book <br>
-        Title: {{note.Title|json}}<br>
+        Title: {{note.id|json}}<br>
         Edition: {{note.Edition|json}}<br>
         Course Number: {{note.Course_Number|json}}<br>
         Description: {{note.Description|json}}<br>
         Price: {{note.Price|json}}<br>
+        
       </div>
+      <button (click)="addToCart(note)" class="btn red">Add to Cart</button>
     </div>
     </div>
     <h3>Sports</h3><br>

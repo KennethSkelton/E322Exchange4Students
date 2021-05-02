@@ -4,6 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import firebase from 'firebase';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { FirebaseService } from './services/firebase.service';
 
 interface Book {
   Title: string
@@ -12,6 +13,8 @@ interface Book {
   Description: string
   Price: number
   OwnerID: string
+  Image: any
+  id: string
 }
 
 interface Sport {
@@ -55,6 +58,12 @@ interface Electronic {
   OwnerID: string
 }
 
+interface Credential {
+  UserName : string 
+  Password : string 
+}
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -66,13 +75,19 @@ export class AppComponent implements OnInit {
   furnitureCollection:AngularFirestoreCollection<Furniture>;
   clothingCollection:AngularFirestoreCollection<Clothing>;
   electronicsCollection:AngularFirestoreCollection<Electronic>;
+  credentialsCollection:AngularFirestoreCollection<Credential>;
+
   //noteDoc: AngularFirestoreDocument<Book>;
   notes: Observable<Book[]>;
   sports: Observable<Sport[]>;
   furniture: Observable<Furniture[]>;
   clothing: Observable<Clothing[]>;
   electronics: Observable<Electronic[]>;
+  credentials: Observable<Credential[]>;
 
+  itemDoc: AngularFirestoreDocument<Book>;
+
+  isSignedIn = false
   tempItem: string
   newContent: string
   newCourseNumbers: string
@@ -87,21 +102,37 @@ export class AppComponent implements OnInit {
   size : string
   model : string
   title = 'Exchange4Students';
-  ownerid : string
+  ownerid : any
+  image: any
   this: any;
-  constructor(public afs: AngularFirestore){
+  userName: string 
+  password: string
+  id: string
+
+  currentUserName: string
+
+  constructor(public afs: AngularFirestore, public firebaseService : FirebaseService){
 
     this.notesCollection = this.afs.collection('Items')
     this.sportsCollection = this.afs.collection('Sports')
     this.furnitureCollection = this.afs.collection('Furniture')
     this.clothingCollection = this.afs.collection('Clothing')
     this.electronicsCollection = this.afs.collection('Electronic')
-    //this.noteDoc = this.afs.doc('Items/Book')
-    this.notes = this.notesCollection.valueChanges()
+    this.credentialsCollection = this.afs.collection('Credential')
+    this.itemDoc = this.afs.doc('Items/Book')
+    //this.notes = this.notesCollection.valueChanges()
     this.sports = this.sportsCollection.valueChanges()
     this.furniture = this.furnitureCollection.valueChanges()
     this.clothing = this.clothingCollection.valueChanges()
     this.electronics = this.electronicsCollection.valueChanges()
+    this.credentials = this.credentialsCollection.valueChanges()
+    this.notes = this.notesCollection.snapshotChanges().pipe(map(changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Book;
+        data.id = a.payload.doc.id;
+        return data;
+      });
+    }));
     
 
     this.tempItem = ""
@@ -117,10 +148,20 @@ export class AppComponent implements OnInit {
     this.dimension = ""
     this.size = ""
     this.model = ""
-    this.ownerid = "Steven"
-   
+    this.ownerid = localStorage.getItem('owner')
+    this.image = ""
+    this.userName = "steven" 
+    this.password = ""
+    this.currentUserName = ""
+    this.id = ""
   }
-
+  //https://stackoverflow.com/questions/59477088/store-images-in-firebase-storage-and-data-in-firestore
+  // uploadFile(event: any) {
+  //   const file = event.target.files[0];
+  //   this.image = file;
+  //   // const filePath = 'name-your-file-path-here';
+  //   // const task = this.afs.upload(filePath, file);
+  // }
   ngOnInit(){
 
     this.notesCollection = this.afs.collection('Items')
@@ -128,26 +169,70 @@ export class AppComponent implements OnInit {
     this.furnitureCollection = this.afs.collection('Furniture')
     this.clothingCollection = this.afs.collection('Clothing')
     this.electronicsCollection = this.afs.collection('Electronic')
+    this.credentialsCollection = this.afs.collection('Credential')
    // this.noteDoc = this.afs.doc('Items/Book')
     this.notes = this.notesCollection.valueChanges()
     this.sports = this.sportsCollection.valueChanges()
     this.furniture = this.furnitureCollection.valueChanges()
     this.clothing = this.clothingCollection.valueChanges()
     this.electronics = this.electronicsCollection.valueChanges()
+    this.credentials = this.credentialsCollection.valueChanges()
+
+
+    if(localStorage.getItem('user')!==null){
+    this.isSignedIn = true
+    
+    }
+    else
+    this.isSignedIn = false
   }
+  async onSignup(email:string,password:string){
+    await this.firebaseService.signup(email,password)
+    if(this.firebaseService.isLoggedIn)
+    this.isSignedIn = true
+  }
+  async onSignin(email:string,password:string){
+    await this.firebaseService.signin(email,password)
+    if(this.firebaseService.isLoggedIn)
+    this.isSignedIn = true
+  }
+  handleLogout(){
+      this.isSignedIn = false
+  }
+
+  // uploadFile(event) {
+  //   const file = event.target.files[0];
+  //   const filePath = 'name-your-file-path-here';
+  //   const task = this.afs.collection.add(filePath, file);
+  // }
 
   AddBook(){
     this.notesCollection.add({
+      id: this.id,
       Title: this.newContent,
       Course_Number: this.newCourseNumbers,
       Edition: this.edition,
       Description: this.description,
       Price: this.price,
-      OwnerID: this.ownerid
+      OwnerID: this.ownerid,
+      Image: this.image
     })
     this.resetValues()
   }
-
+  deleteItem(item: any){
+    console.log(item.id);
+    this.itemDoc = this.afs.doc(`Items/${item.id}`);
+    this.itemDoc.delete();
+  }
+  addToCart(item:any){
+    this.notesCollection = this.afs.collection(`Users/${this.userName}/cart`);
+    this.notesCollection.add(item);
+  }
+  deleteFromCart(item: any){
+    console.log(item.id);
+    this.itemDoc = this.afs.doc(`/Users/${this.userName}/cart/${item.id}`);
+    this.itemDoc.delete();
+  }
   AddSport(){
     this.sportsCollection.add({
       Title: this.newContent,
@@ -200,13 +285,36 @@ export class AppComponent implements OnInit {
     this.resetValues()
   }
 
+  AddCredentials(){
+    this.credentialsCollection.add({
+      UserName: this.userName,
+      Password: this.password
+    })
+    this.resetValues()
+  }
 
+  checkCredentials(){
+    this.credentialsCollection = this.afs.collection('Credentials', ref => {
+      return ref.where('UserName', '==', this.userName).where('Password', '==', this.password)
+    });
+    this.credentials = this.credentialsCollection.valueChanges()
+    if(this.credentials == null){
+      this.resetValues()
+    }
+    else{
+     
+      this.resetValues()
+    }
+  }
 
 
   //All for Books
   Booksort(){
     this.notesCollection = this.afs.collection('Items');
     this.notes = this.notesCollection.valueChanges()
+  }
+  getBookID(){
+
   }
   BookTitleSort(){
     this.notesCollection = this.afs.collection('Items', ref => {
@@ -430,6 +538,8 @@ export class AppComponent implements OnInit {
     this.dimension = ""
     this.size = ""
     this.model = ""
+    this.userName = ""
+    this.password = ""
   }
     //this.noteDoc.update({Title: this.newContent})
 

@@ -4,6 +4,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import {AppComponent} from '../app.component';
+import { FirebaseService } from '../services/firebase.service';
 
 
 @Component({
@@ -11,43 +12,43 @@ import {AppComponent} from '../app.component';
   templateUrl: './post-item.component.html',
   styleUrls: ['./post-item.component.css']
 })
-export class FileUpload {
-  key: string;
-  name: string;
-  url: string;
-  file: File;
+// class FileUpload {
+//   key: string;
+//   name: string;
+//   url: string;
+//   file: File;
 
-  constructor(file: File) {
-    this.file = file;
-  }
-}
+//   constructor(file: File) {
+//     this.file = file;
+//   }
+// }
 
 export class PostItemComponent extends AppComponent {
   private basePath = '/uploads';
-  constructor(public afs: AngularFirestore, private storage: AngularFireStorage) {
-    super(afs);
+  constructor(public afs: AngularFirestore,public firebaseService: FirebaseService, private storage: AngularFireStorage) {
+    super(afs, firebaseService);
     
   }
-  pushFileToStorage(fileUpload: FileUpload): Observable<number> {
-    const filePath = `${this.basePath}/${fileUpload.file.name}`;
-    const storageRef = this.storage.ref(filePath);
-    const uploadTask = this.storage.upload(filePath, fileUpload.file);
+  // pushFileToStorage(fileUpload: FileUpload): Observable<number> {
+  //   const filePath = `${this.basePath}/${fileUpload.file.name}`;
+  //   const storageRef = this.storage.ref(filePath);
+  //   const uploadTask = this.storage.upload(filePath, fileUpload.file);
   
-    uploadTask.snapshotChanges().pipe(
-      finalize(() => {
-        storageRef.getDownloadURL().subscribe(downloadURL => {
-          fileUpload.url = downloadURL;
-          fileUpload.name = fileUpload.file.name;
-          this.saveFileData(fileUpload);
-        });
-      })
-    ).subscribe();
+  //   uploadTask.snapshotChanges().pipe(
+  //     finalize(() => {
+  //       storageRef.getDownloadURL().subscribe(downloadURL => {
+  //         fileUpload.url = downloadURL;
+  //         fileUpload.name = fileUpload.file.name;
+  //         this.saveFileData(fileUpload);
+  //       });
+  //     })
+  //   ).subscribe();
   
-    return uploadTask.percentageChanges();
-  }
-  saveFileData(fileUplad: FileUpload){
+  //   return uploadTask.percentageChanges();
+  // }
+  // saveFileData(fileUplad: FileUpload){
     
-  }
+  // }
   ngOnInit(): void {
   }
  
