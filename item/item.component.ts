@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import {AppComponent} from '../app.component';
 import { FirebaseService } from '../services/firebase.service';
 
@@ -11,8 +12,8 @@ import { FirebaseService } from '../services/firebase.service';
 export class ItemComponent extends AppComponent {
 
 
-  constructor(public afs: AngularFirestore, public firebaseService: FirebaseService) {
-      super(afs, firebaseService)  
+  constructor(public afs: AngularFirestore, public firebaseService: FirebaseService,public storage: AngularFireStorage) {
+      super(afs, firebaseService,storage)  
   }
   ngOnInit(): void {
     this.notesCollection = this.afs.collection('Items', ref => {

@@ -17,6 +17,7 @@ import {enableProdMode} from '@angular/core';
 import { CartComponent } from './cart/cart.component';
 import { LoginComponent } from './login/login.component'
 import { FirebaseService } from './services/firebase.service';
+import { NotificationsComponent } from './notifications/notifications.component';
 const config = {
   apiKey: "AIzaSyCaFTRcmiiD6qNy48L1fYcpRMJH96Gnhc4",
   authDomain: "exchange4students-113b5.firebaseapp.com",
@@ -35,7 +36,8 @@ const config = {
     PageNotFoundComponent,
     ViewItemComponent,
     CartComponent,
-    LoginComponent
+    LoginComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +54,7 @@ const config = {
       {path: 'item', component: ItemComponent},
       {path: 'cart', component: CartComponent},
       {path: 'login', component: LoginComponent},
+      {path: 'notification', component: NotificationsComponent},
       {path: '**', component: PageNotFoundComponent},
     ]),
   ],

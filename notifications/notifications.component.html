@@ -1,0 +1,13 @@
+<div class = "card-container" *ngFor="let notif of (notifications | async)">
+    <div class = "card">
+  
+      notification<br>
+      Sender: {{notif.sender|json}}<br>
+      Buyer: {{notif.buyer|json}}<br>
+      Item: {{notif.item|json}}<br>
+      Message: {{notif.displayMessage|json}}<br>
+      Id: {{notif.id|json}}<br>
+    
+    </div>
+    <button (click)="removeNotification(notif)">Delete Notification</button>
+  </div>

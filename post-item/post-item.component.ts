@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
@@ -25,10 +25,39 @@ import { FirebaseService } from '../services/firebase.service';
 
 export class PostItemComponent extends AppComponent {
   private basePath = '/uploads';
-  constructor(public afs: AngularFirestore,public firebaseService: FirebaseService, private storage: AngularFireStorage) {
-    super(afs, firebaseService);
-    
+  
+  images:any
+  @ViewChild('myImage') myImage: any
+  constructor(public afs: AngularFirestore,public firebaseService: FirebaseService, public storage: AngularFireStorage) {
+    super(afs, firebaseService,storage);
+   
+    this.images = ""
   }
+  upload($event:any){
+    this.path = $event.target.files[0];
+ 
+    let reader = new FileReader();
+    this.image = $event.target.files[0];
+
+    reader.onload = (e) => {
+      if(e.target!=null){
+        this.myImage.nativeElement.src = e.target["result"];
+      }
+      
+    };
+    reader.readAsDataURL($event.target.files[0]);
+    var str = Math.random()+this.path;
+    // this.storage.upload("/files/"+str,this.path);
+    this.image = "/files/"+str;
+  }
+  // uploadImage(){
+  //   console.log(this.path)
+  //   var str = Math.random()+this.path;
+  //   this.storage.upload("/files/"+str,this.path);
+  //   this.image = "/files/"+str;
+  // }
+  
+  
   // pushFileToStorage(fileUpload: FileUpload): Observable<number> {
   //   const filePath = `${this.basePath}/${fileUpload.file.name}`;
   //   const storageRef = this.storage.ref(filePath);
@@ -51,15 +80,7 @@ export class PostItemComponent extends AppComponent {
   // }
   ngOnInit(): void {
   }
- 
-  // preview_image(event) {
-  //   var reader = new FileReader();
-  //   reader.onload = function(){
-  //     var output = document.getElementById('output_image');
-  //     output.src = reader.result;
-  //   }
-  //   reader.readAsDataURL(event.target.files[0]);
-  // }
+
   resetColors(x:string){
       var y =document.getElementsByClassName("icon");
       var tip = 0;

@@ -3,7 +3,6 @@
 <h1> Marketplace</h1>
 
 
-
 <style>
   .sport {
       display: none
@@ -20,8 +19,6 @@
   .electronic {
       display: none
   }
-  
-  
   </style>
 
     <div id = "parent">
@@ -32,21 +29,21 @@
           <!--Title-->
             <li class = "book"><div id = "sti">
                 Book Title:
-                <input [(ngModel)]= "newContent">
+                <br><input [(ngModel)]= "newContent"><br>
               <button (click) = "BookTitleSort()">search</button>
             </div></li>
 
             <!--Course Number-->
               <li class = "book"><div id = "sti">
                 Course Number:
-                <input [(ngModel)]= "newCourseNumbers">
+                <br><input [(ngModel)]= "newCourseNumbers"><br>
               <button (click) = "BookCourseNumberSort()">search</button>
             </div></li>
 
           <!--Edition-->
             <li class = "book"><div id = "sti">
               Edition:
-              <input [(ngModel)]= "edition">
+              <br><input [(ngModel)]= "edition"><br>
             <button (click) = "BookEditionSort()">search</button>
           </div></li>
 
@@ -54,14 +51,14 @@
          <!--Description-->
           <li class = "book"><div id = "sti">
             Description:
-            <input [(ngModel)]= "description">
+            <br><input [(ngModel)]= "description"><br>
           <button (click) = "BookDescriptionSort()">search</button>
         </div></li>
 
           <!--Price-->
           <li class = "book"><div id = "sti">
             Price:
-            <input [(ngModel)]= "price">
+            <br><input [(ngModel)]= "price"><br>
           <button (click) = "BookPriceSort()">search</button>
         </div></li>
         </ul>
@@ -74,14 +71,14 @@
           <!--Title-->
             <li class = "sport"><div id = "sti">
                 Sport Title:
-                <input [(ngModel)]= "newContent">
+                <br><input [(ngModel)]= "newContent"><br>
               <button (click) = "SportTitleSort()">search</button>
             </div></li>
 
             <!--Sport-->
               <li class = "sport"><div id = "sti">
                 Sport:
-                <input [(ngModel)]= "sport">
+                <br><input [(ngModel)]= "sport"><br>
               <button (click) = "SportSportSort()">search</button>
             </div></li>
 
@@ -89,7 +86,7 @@
 
             <li class = "sport"><div id = "sti">
               Weight:
-              <input [(ngModel)]= "weight">
+              <br><input [(ngModel)]= "weight"><br>
             <button (click) = "SportWeightSort()">search</button>
           </div></li>
 
@@ -97,14 +94,14 @@
          <!--Description-->
           <li class = "sport"><div id = "sti">
             Description:
-            <input [(ngModel)]= "description">
+            <br><input [(ngModel)]= "description"><br>
           <button (click) = "SportDescriptionSort()">search</button>
         </div></li>
 
           <!--Price-->
           <li class = "sport"><div id = "sti">
             Price:
-            <input [(ngModel)]= "price">
+            <br><input [(ngModel)]= "price"><br>
           <button (click) = "SportPriceSort()">search</button>
         </div></li>
         </ul>
@@ -117,28 +114,28 @@
           <!--Title-->
             <li class = "furniture"><div id = "sti">
                 Furniture Title:
-                <input [(ngModel)]= "newContent">
+                <br><input [(ngModel)]= "newContent"><br>
               <button (click) = "FurnitureTitleSort()">search</button>
             </div></li>
 
             <!--Category-->
               <li class = "furniture"><div id = "sti">
                 Category:
-                <input [(ngModel)]= "category">
+                <br><input [(ngModel)]= "category"><br>
               <button (click) = "FurnitureCategorySort()">search</button>
             </div></li>
 
             <!--Weight-->
               <li class = "furniture"><div id = "sti">
                 Weight:
-                <input [(ngModel)]= "weight">
+                <br><input [(ngModel)]= "weight"><br>
               <button (click) = "FurnitureWeightSort()">search</button>
             </div></li>
 
             <!--Description-->
               <li class = "furniture"><div id = "sti">
                 Description:
-                <input [(ngModel)]= "description">
+                <br><input [(ngModel)]= "description"><br>
               <button (click) = "FurnitureDescriptionSort()">search</button>
             </div></li>
 
@@ -146,21 +143,21 @@
             <!--Color-->
               <li class = "furniture"><div id = "sti">
                 Color:
-                <input [(ngModel)]= "color">
+                <br><input [(ngModel)]= "color"><br>
               <button (click) = "FurnitureColorSort()">search</button>
             </div></li>
 
             <!--Dimension-->
             <li class = "furniture"><div id = "sti">
               Dimension:
-              <input [(ngModel)]= "dimension">
+              <br><input [(ngModel)]= "dimension"><br>
             <button (click) = "FurnitureDimensionSort()">search</button>
           </div></li>
 
             <!--Price-->
             <li class = "furniture"><div id = "sti">
               Price:
-              <input [(ngModel)]= "price">
+              <br><input [(ngModel)]= "price"><br>
             <button (click) = "FurniturePriceSort()">search</button>
           </div></li>
           </ul>
@@ -172,21 +169,21 @@
           <!--Title-->
             <li class = "clothing"><div id = "sti">
                 Clothing Title:
-                <input [(ngModel)]= "newContent">
+                <br><input [(ngModel)]= "newContent"><br>
               <button (click) = "ClothingTitleSort()">search</button>
             </div></li>
 
             <!--Category-->
               <li class = "clothing"><div id = "sti">
                 Category:
-                <input [(ngModel)]= "category">
+                <br><input [(ngModel)]= "category"><br>
               <button (click) = "ClothingCategorySort()">search</button>
             </div></li>
 
             <!--Description-->
               <li class = "clothing"><div id = "sti">
                 Description:
-                <input [(ngModel)]= "description">
+                <br><input [(ngModel)]= "description"><br>
               <button (click) = "ClothingDescriptionSort()">search</button>
             </div></li>
 
@@ -194,21 +191,21 @@
             <!--Color-->
               <li class = "clothing"><div id = "sti">
                 Color:
-                <input [(ngModel)]= "color">
+                <br><input [(ngModel)]= "color"><br>
               <button (click) = "ClothingColorSort()">search</button>
             </div></li>
 
             <!--Size-->
             <li class = "clothing"><div id = "sti">
               Size:
-              <input [(ngModel)]= "size">
+              <br><input [(ngModel)]= "size"><br>
             <button (click) = "ClothingSizeSort()">search</button>
           </div></li>
 
             <!--Price-->
             <li class = "clothing"><div id = "sti">
               Price:
-              <input [(ngModel)]= "price">
+              <br><input [(ngModel)]= "price"><br>
             <button (click) = "ClothingPriceSort()">search</button>
           </div></li>
           </ul>
@@ -219,49 +216,49 @@
           <!--Title-->
             <li class = "electronic"><div id = "sti">
                 Electronic Title:
-                <input [(ngModel)]= "newContent">
+                <br><input [(ngModel)]= "newContent"><br>
               <button (click) = "ElectronicTitleSort()">search</button>
             </div></li>
 
             <!--Category-->
               <li class = "electronic"><div id = "sti">
                 Category:
-                <input [(ngModel)]= "category">
+                <br><input [(ngModel)]= "category"><br>
               <button (click) = "ElectronicCategorySort()">search</button>
             </div></li>
 
             <!--Description-->
               <li class = "electronic"><div id = "sti">
                 Description:
-                <input [(ngModel)]= "description">
+                <br><input [(ngModel)]= "description"><br>
               <button (click) = "ElectronicDescriptionSort()">search</button>
             </div></li>
 
             <!--Weight-->
               <li class = "electronic"><div id = "sti">
                 Weight:
-                <input [(ngModel)]= "weight">
+                <br><input [(ngModel)]= "weight"><br>
               <button (click) = "ElectronicWeightSort()">search</button>
             </div></li>
 
             <!--Model-->
               <li class = "electronic"><div id = "sti">
                 Model:
-                <input [(ngModel)]= "model">
+                <br><input [(ngModel)]= "model"><br>
               <button (click) = "ElectronicModelSort()">search</button>
             </div></li>
 
             <!--Dimension-->
             <li class = "electronic"><div id = "sti">
               Dimension:
-              <input [(ngModel)]= "dimension">
+              <br><input [(ngModel)]= "dimension"><br>
             <button (click) = "ElectronicDimensionSort()">search</button>
           </div></li>
 
             <!--Price-->
             <li class = "electronic"><div id = "sti">
               Price:
-              <input [(ngModel)]= "price">
+              <br><input [(ngModel)]= "price"><br>
             <button (click) = "ElectronicPriceSort()">search</button>
           </div></li>
           </ul>
@@ -281,39 +278,43 @@
     course_number:note.Course_Number,description:note.Description,price:note.Price,type:'Book'}" class = "card">
     
         Book <br>
-        Title: {{note.id|json}}<br>
+        Title: {{note.Title|json}}<br>
         Edition: {{note.Edition|json}}<br>
         Course Number: {{note.Course_Number|json}}<br>
         Description: {{note.Description|json}}<br>
         Price: {{note.Price|json}}<br>
-        
+        <img [src]="images[note.id] | async">
       </div>
-      <button (click)="addToCart(note)" class="btn red">Add to Cart</button>
+      <button (click)="addToCart(note); makeBlue(this)" class="btnred">Add to Cart</button>
+
     </div>
     </div>
     <h3>Sports</h3><br>
     <div id = "parent">
         
     <div class = "card-container" *ngFor="let sport of (sports | async)">
-     
         <div [routerLink]="['/view-item']" [queryParams]="{title:sport.Title,sport:sport.Sport,weight:sport.Weight,
             description:sport.Description,price:sport.Price,type:'Sport'}" class = "card">
+
           Sport <br>
           Title: {{sport.Title|json}}<br>
           Sport: {{sport.Sport|json}}<br>
           Weight: {{sport.Weight|json}}<br>
           Description: {{sport.Description|json}}<br>
           Price: {{sport.Price|json}}<br>
+
         </div>
+        <button (click)="addToCart(sport)" class="btnred">Add to Cart</button>
+        
     </div>
     </div>
     <h3>Furniture</h3><br>
     <div id = "parent">
         
         <div class = "card-container" *ngFor="let furn of (furniture | async)">
-         
             <div [routerLink]="['/view-item']" [queryParams]="{title:furn.Title,category:furn.Category,weight:furn.Weight,
                 color:furn.Color,dimension:furn.Dimension,description:furn.Description,price:furn.Price,type:'Furniture'}" class = "card">
+
               Furniture <br>
               Title: {{furn.Title|json}}<br>
               Category: {{furn.Category|json}}<br>
@@ -322,16 +323,20 @@
               Dimension: {{furn.Dimension|json}}<br>
               Description: {{furn.Description|json}}<br>
               Price: {{furn.Price|json}}<br>
+
             </div>
+            <button (click)="addToCart(furn)" class="btnred">Add to Cart</button>
+           
+            
         </div>
         </div>
     <h3>Clothing</h3><br>
     <div id = "parent">
         
         <div class = "card-container" *ngFor="let cloth of (clothing | async)">
-         
             <div [routerLink]="['/view-item']" [queryParams]="{title:cloth.Title,category:cloth.Category,
                 size:cloth.Size,color:cloth.Color,description:cloth.Description,price:cloth.Price,type:'Clothing'}" class = "card">
+
               Clothing <br>
               Title: {{cloth.Title|json}}<br>
               Category: {{cloth.Category|json}}<br>
@@ -339,7 +344,11 @@
               Color: {{cloth.Color|json}}<br>
               Description: {{cloth.Description|json}}<br>
               Price: {{cloth.Price|json}}<br>
+
             </div>
+            <button (click)="addToCart(cloth)" class="btnred">Add to Cart</button>
+           
+            
         </div>
         </div>
     <h3>Electronic</h3><br>
@@ -349,6 +358,7 @@
          
             <div [routerLink]="['/view-item']" [queryParams]="{title:elect.Title,category: elect.Category,
                 dimension:elect.Dimension,model:elect.Model,weight:elect.Weight,description:elect.Description,price:elect.Price,type:'Electronic'}" class = "card">
+
               Electronic <br>
               Title: {{elect.Title|json}}<br>
               Category: {{elect.Category|json}}<br>
@@ -357,7 +367,11 @@
               Weight: {{elect.Weight|json}}<br>
               Description: {{elect.Description|json}}<br>
               Price: {{elect.Price|json}}<br>
+
             </div>
+            <button (click)="addToCart(elect)" class="btnred">Add to Cart</button>
         </div>
         </div>
+
+
 

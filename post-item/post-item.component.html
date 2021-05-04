@@ -14,11 +14,10 @@
 #electronic {
     display: none
 }
-
-
 </style>
+
 <h1>Post An Item</h1>
-<body>
+
 
     <button (click)= "bookShow()" class="icon icon-book" id = "bookButton">Book</button>
     <button (click)= "sportShow()"class="icon icon-sport"id = "sportButton">Sport</button>
@@ -34,6 +33,7 @@
         Edition: {{edition}}<br>
         Description: {{description}}<br>
         Price: {{price}}<br>
+        <img #myImage src="#" id="output_image"/>
     </div>
       Book Title:
       <input [(ngModel)]= "newContent"> <br>
@@ -46,8 +46,10 @@
       Price:
       <input [(ngModel)]= "price"><br>
       Image:
-      <input type="file" accept="image/*" [(ngModel)]= "image"><br>
+      <input type="file" accept=".png" (change)="upload($event)" ><br>
+      
     <button (click)= "AddBook()" id='submit'>Add to store</button>
+    
   </div>
 
 
@@ -153,5 +155,4 @@
     
     <button (click)= "AddElectronic()" id='submit'>Add to store</button>
   </div>
-  
-</body>
+

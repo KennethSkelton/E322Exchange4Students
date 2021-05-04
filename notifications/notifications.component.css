@@ -1,19 +1,5 @@
-.button {
-    transform: translateY(-0.25rem);
-    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
-  }
 
-  .btnred {
-    align-self: center;
-  }
 
-  .card svg.material-icons path {
-    fill: #888;
-  }
-  #parent {
-    display: flex;
-
-  }
   .card-container {
     display: flex;
     flex-wrap: wrap;
@@ -29,20 +15,21 @@
   }
 
   .card {
+    border-radius: 4px;
     border: 1px solid #eee;
     background-color: #fafafa;
     height: 200px;
     width: 200px;
+    margin: 0 8px 16px;
+    padding: 16px;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-self: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
     line-height: 24px;
   }
 
-  .itemCard {
-    align-self: center;
-  }
   .card-container .card:not(:last-child) {
     margin-right: 0;
   }

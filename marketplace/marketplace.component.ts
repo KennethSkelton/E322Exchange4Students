@@ -7,6 +7,18 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { FirebaseService } from '../services/firebase.service';
+import { map } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
+interface Book {
+  Title: string
+  Course_Number: string
+  Edition: string
+  Description: string
+  Price: number
+  OwnerID: string
+  Image: any
+  id: string
+}
 @Component({
   selector: 'app-marketplace',
   templateUrl: './marketplace.component.html',
@@ -15,8 +27,8 @@ import { FirebaseService } from '../services/firebase.service';
 @Injectable()
 export class MarketplaceComponent extends AppComponent {
 
-  constructor(public afs: AngularFirestore, public firebaseService : FirebaseService) {
-    super(afs,firebaseService);
+  constructor(public afs: AngularFirestore, public firebaseService : FirebaseService,public storage: AngularFireStorage) {
+    super(afs,firebaseService, storage);
   }
     
     ngOnInit() {
@@ -84,7 +96,8 @@ export class MarketplaceComponent extends AppComponent {
   }
 
 
-
+  makeBlue(elem:any) {
+    elem.style.display = "none"
+  }
 
 }
-

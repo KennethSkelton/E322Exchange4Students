@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { map } from 'rxjs/operators';
 import { AppComponent } from '../app.component';
 import { FirebaseService } from '../services/firebase.service';
@@ -20,12 +21,12 @@ interface Book {
 })
 export class CartComponent extends AppComponent {
 
-  constructor(public afs: AngularFirestore, public firebaseService: FirebaseService) {
-    super(afs, firebaseService);
-    this.notesCollection = this.afs.collection(`Users/${this.userName}/cart`);
-    this.notes = this.notesCollection.snapshotChanges().pipe(map(changes => {
+  constructor(public afs: AngularFirestore, public firebaseService: FirebaseService, public storage: AngularFireStorage) {
+    super(afs, firebaseService,storage);
+    this.cartCollection = this.afs.collection(`Users/${this.ownerid}/cart`);
+    this.cart = this.cartCollection.snapshotChanges().pipe(map(changes => {
       return changes.map(a => {
-        const data = a.payload.doc.data() as Book;
+        const data = a.payload.doc.data() as any;
         data.id = a.payload.doc.id;
         return data;
       });

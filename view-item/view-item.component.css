@@ -24,19 +24,19 @@
   }
 
   .card {
-    border-radius: 4px;
     border: 1px solid #eee;
     background-color: #fafafa;
     height: 200px;
     width: 200px;
-    margin: 0 8px 16px;
-    padding: 16px;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
-    transition: all 0.2s ease-in-out;
+    align-self: center;
     line-height: 24px;
+  }
+
+  .viewItemCard {
+    align-self: center;
   }
 
   .card-container .card:not(:last-child) {

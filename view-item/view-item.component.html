@@ -1,7 +1,3 @@
-
-<body>
-
-
     <div *ngFor="let note of (notes | async)">
     
         <div class = "card">
@@ -12,7 +8,8 @@
           Description: {{note.Description|json}}<br>
           Price: {{note.Price|json}}<br>
         </div>
-      </div>
+        <button (click)="addToCart(note)" class="btnred">Add to Cart</button>
+    </div>
      
     
           
@@ -26,51 +23,56 @@
             Description: {{sport.Description|json}}<br>
             Price: {{sport.Price|json}}<br>
           </div>
+          <button (click)="addToCart(sport)" class="btnred">Add to Cart</button>
       </div>
     
           
-          <div  *ngFor="let furn of (furniture | async)">
-           
-              <div class = "card">
-                Furniture <br>
-                Title: {{furn.Title|json}}<br>
-                Category: {{furn.Category|json}}<br>
-                Weight: {{furn.Weight|json}}<br>
-                Color: {{furn.Color|json}}<br>
-                Dimensions: {{furn.Dimension|json}}<br>
-                Description: {{furn.Description|json}}<br>
-                Price: {{furn.Price|json}}<br>
-              </div>
+      <div  *ngFor="let furn of (furniture | async)" style.align = center>
+        
+          <div class = "card">
+            Furniture <br>
+            Title: {{furn.Title|json}}<br>
+            Category: {{furn.Category|json}}<br>
+            Weight: {{furn.Weight|json}}<br>
+            Color: {{furn.Color|json}}<br>
+            Dimensions: {{furn.Dimension|json}}<br>
+            Description: {{furn.Description|json}}<br>
+            Price: {{furn.Price|json}}<br>
           </div>
+          <button (click)="addToCart(furn)" class="btnred">Add to Cart</button>
+      </div>
     
           
-          <div *ngFor="let cloth of (clothing | async)">
-           
-              <div class = "card">
-                Clothing <br>
-                Title: {{cloth.Title|json}}<br>
-                Category: {{cloth.Category|json}}<br>
-                Size: {{cloth.Size|json}}<br>
-                Color: {{cloth.Color|json}}<br>
-                Description: {{cloth.Description|json}}<br>
-                Price: {{cloth.Price|json}}<br>
-              </div>
+      <div *ngFor="let cloth of (clothing | async)" style.align = center>
+        
+          <div class = "card">
+            Clothing <br>
+            Title: {{cloth.Title|json}}<br>
+            Category: {{cloth.Category|json}}<br>
+            Size: {{cloth.Size|json}}<br>
+            Color: {{cloth.Color|json}}<br>
+            Description: {{cloth.Description|json}}<br>
+            Price: {{cloth.Price|json}}<br>
           </div>
+          <button (click)="addToCart(cloth)" class="btnred">Add to Cart</button>
+      </div>
     
           
-          <div *ngFor="let elect of (electronics | async)">
-           
-              <div class = "card">
-                Electronic <br>
-                Title: {{elect.Title|json}}<br>
-                Category: {{elect.Category|json}}<br>
-                Dimension: {{elect.Dimension|json}}<br>
-                Model: {{elect.Model|json}}<br>
-                Weight: {{elect.Weight|json}}<br>
-                Description: {{elect.Description|json}}<br>
-                Price: {{elect.Price|json}}<br>
-              </div>
+      <div *ngFor="let elect of (electronics | async)" style.align = center>
+        
+          <div class = "card">
+            Electronic <br>
+            Title: {{elect.Title|json}}<br>
+            Category: {{elect.Category|json}}<br>
+            Dimension: {{elect.Dimension|json}}<br>
+            Model: {{elect.Model|json}}<br>
+            Weight: {{elect.Weight|json}}<br>
+            Description: {{elect.Description|json}}<br>
+            Price: {{elect.Price|json}}<br>
           </div>
+          <button (click)="addToCart(elect)" class="btnred">Add to Cart</button>
+      </div>
+
           <style>
             #sport {
                 display: none
@@ -104,7 +106,7 @@
                 Price:
                 <input [(ngModel)]= "Pprice">
               
-              <button (click)= "updateBook()">Update</button>
+              
             </div>
             <div id = "sport">
               <p> Enter information you would like to change in your sport listing</p>
@@ -176,15 +178,3 @@
               
               <button (click)= "AddElectronic()"></button>
             </div>
-         
-            
-    
-
-
-
-
-
-
-
-    
-</body>

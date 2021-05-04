@@ -1,6 +1,8 @@
+import { DeclareFunctionStmt } from '@angular/compiler/src/output/output_ast';
 import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import firebase from 'firebase';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -24,6 +26,7 @@ interface Sport {
   Price : number
   Sport : string
   OwnerID: string
+  id: string
 }
 
 interface Furniture {
@@ -35,6 +38,7 @@ interface Furniture {
   Weight : number
   Price : number
   OwnerID: string
+  id: string
 }
 
 interface Clothing {
@@ -45,6 +49,7 @@ interface Clothing {
   Size : string 
   Price : number
   OwnerID: string
+  id: string
 }
 
 interface Electronic {
@@ -56,13 +61,21 @@ interface Electronic {
   Weight : number
   Price : number
   OwnerID: string
+  id: string
 }
 
 interface Credential {
   UserName : string 
   Password : string 
+  id: string
 }
-
+interface notification{
+  sender: string
+  buyer: string
+  item: string
+  displayMessage: string
+  id: string
+}
 
 @Component({
   selector: 'app-root',
@@ -71,21 +84,25 @@ interface Credential {
 })
 export class AppComponent implements OnInit {
   notesCollection:AngularFirestoreCollection<Book>;
+  notesCollection2:AngularFirestoreCollection<Book>;
   sportsCollection:AngularFirestoreCollection<Sport>;
   furnitureCollection:AngularFirestoreCollection<Furniture>;
   clothingCollection:AngularFirestoreCollection<Clothing>;
   electronicsCollection:AngularFirestoreCollection<Electronic>;
   credentialsCollection:AngularFirestoreCollection<Credential>;
-
+  notificationsCollection:AngularFirestoreCollection<notification>;
+  cartCollection:AngularFirestoreCollection<any>
   //noteDoc: AngularFirestoreDocument<Book>;
   notes: Observable<Book[]>;
+  notes2: Observable<Book[]>;
   sports: Observable<Sport[]>;
   furniture: Observable<Furniture[]>;
   clothing: Observable<Clothing[]>;
   electronics: Observable<Electronic[]>;
   credentials: Observable<Credential[]>;
-
-  itemDoc: AngularFirestoreDocument<Book>;
+  notifications: Observable<notification[]>;
+  itemDoc: AngularFirestoreDocument<any>;
+  cart: Observable<any[]>
 
   isSignedIn = false
   tempItem: string
@@ -104,32 +121,70 @@ export class AppComponent implements OnInit {
   title = 'Exchange4Students';
   ownerid : any
   image: any
+  images: any
   this: any;
   userName: string 
   password: string
   id: string
-
+  path: string
   currentUserName: string
-
-  constructor(public afs: AngularFirestore, public firebaseService : FirebaseService){
+  posts: any
+  
+  constructor(public afs: AngularFirestore, public firebaseService : FirebaseService, public storage: AngularFireStorage){
 
     this.notesCollection = this.afs.collection('Items')
+    this.notesCollection2 = this.afs.collection('Items')
     this.sportsCollection = this.afs.collection('Sports')
     this.furnitureCollection = this.afs.collection('Furniture')
     this.clothingCollection = this.afs.collection('Clothing')
     this.electronicsCollection = this.afs.collection('Electronic')
     this.credentialsCollection = this.afs.collection('Credential')
+    this.cartCollection = this.afs.collection('Items')
     this.itemDoc = this.afs.doc('Items/Book')
-    //this.notes = this.notesCollection.valueChanges()
-    this.sports = this.sportsCollection.valueChanges()
-    this.furniture = this.furnitureCollection.valueChanges()
-    this.clothing = this.clothingCollection.valueChanges()
-    this.electronics = this.electronicsCollection.valueChanges()
-    this.credentials = this.credentialsCollection.valueChanges()
+
+    this.cart = this.cartCollection.valueChanges()
+    this.notes2 = this.notesCollection2.valueChanges()
+
+    this.sports = this.sportsCollection.snapshotChanges().pipe(map(changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Sport;
+        data.id = a.payload.doc.id;
+        return data;
+      });
+    }));
+    this.furniture = this.furnitureCollection.snapshotChanges().pipe(map(changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Furniture;
+        data.id = a.payload.doc.id;
+        return data;
+      });
+    }));
+    this.clothing = this.clothingCollection.snapshotChanges().pipe(map(changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Clothing;
+        data.id = a.payload.doc.id;
+        return data;
+      });
+    }));
+    this.electronics = this.electronicsCollection.snapshotChanges().pipe(map(changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Electronic;
+        data.id = a.payload.doc.id;
+        return data;
+      });
+    }));
+    this.credentials = this.credentialsCollection.snapshotChanges().pipe(map(changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Credential;
+        data.id = a.payload.doc.id;
+        return data;
+      });
+    }));
     this.notes = this.notesCollection.snapshotChanges().pipe(map(changes => {
       return changes.map(a => {
         const data = a.payload.doc.data() as Book;
         data.id = a.payload.doc.id;
+        this.loadImage(data.Image);
         return data;
       });
     }));
@@ -154,6 +209,31 @@ export class AppComponent implements OnInit {
     this.password = ""
     this.currentUserName = ""
     this.id = ""
+    this.path = ""
+    this.posts = []
+
+    this.images = {};
+    // this.afs.collection('Items').snapshotChanges().subscribe((next) => {
+    //   this.images = {};
+    //   this.posts = [];
+
+    //   next.forEach(post => {
+    //     let obj = post.payload.doc.data() as;
+    //     obj["id"] = post.payload.doc.id;
+    //     this.posts.push(obj);
+
+    //     this.loadImage(post.payload.doc.id);
+    //   })
+    // })
+
+    this.notificationsCollection = this.afs.collection(`Users/${this.ownerid}/notification`);
+    this.notifications = this.notificationsCollection.snapshotChanges().pipe(map(changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as notification;
+        data.id = a.payload.doc.id;
+        return data;
+      });
+    }));
   }
   //https://stackoverflow.com/questions/59477088/store-images-in-firebase-storage-and-data-in-firestore
   // uploadFile(event: any) {
@@ -170,6 +250,7 @@ export class AppComponent implements OnInit {
     this.clothingCollection = this.afs.collection('Clothing')
     this.electronicsCollection = this.afs.collection('Electronic')
     this.credentialsCollection = this.afs.collection('Credential')
+    this.cartCollection = this.afs.collection('Items')
    // this.noteDoc = this.afs.doc('Items/Book')
     this.notes = this.notesCollection.valueChanges()
     this.sports = this.sportsCollection.valueChanges()
@@ -177,6 +258,7 @@ export class AppComponent implements OnInit {
     this.clothing = this.clothingCollection.valueChanges()
     this.electronics = this.electronicsCollection.valueChanges()
     this.credentials = this.credentialsCollection.valueChanges()
+    this.cart = this.cartCollection.valueChanges()
 
 
     if(localStorage.getItem('user')!==null){
@@ -199,7 +281,14 @@ export class AppComponent implements OnInit {
   handleLogout(){
       this.isSignedIn = false
   }
-
+  loadImage(post: string) {
+    const ref = this.storage.ref(`/files/${post}`);
+    ref.getMetadata().toPromise().then(data => {
+      this.images[post] = ref.getDownloadURL();
+    }, err => {
+      console.error(err);
+    });
+  }
   // uploadFile(event) {
   //   const file = event.target.files[0];
   //   const filePath = 'name-your-file-path-here';
@@ -207,16 +296,29 @@ export class AppComponent implements OnInit {
   // }
 
   AddBook(){
-    this.notesCollection.add({
-      id: this.id,
-      Title: this.newContent,
-      Course_Number: this.newCourseNumbers,
-      Edition: this.edition,
-      Description: this.description,
-      Price: this.price,
-      OwnerID: this.ownerid,
-      Image: this.image
-    })
+    if(this.newContent != "" && this.newCourseNumbers != "" && this.edition != "" && this.description != "" && this.price != 0 && this.ownerid != ""){
+      this.notesCollection.add({
+        id: this.id,
+        Title: this.newContent,
+        Course_Number: this.newCourseNumbers,
+        Edition: this.edition,
+        Description: this.description,
+        Price: this.price,
+        OwnerID: this.ownerid,
+        Image: this.image
+      }).then(docRef => {
+        this.storage.upload(`/files/${docRef.id}`, this.image).then(() => {
+        
+        });
+  
+      }, err => {
+        console.error(err);
+      });
+    }
+    else{
+      console.log("You left empty inputs!")
+      /*add message on screen for user */
+    }
     this.resetValues()
   }
   deleteItem(item: any){
@@ -225,68 +327,118 @@ export class AppComponent implements OnInit {
     this.itemDoc.delete();
   }
   addToCart(item:any){
-    this.notesCollection = this.afs.collection(`Users/${this.userName}/cart`);
+    this.notesCollection = this.afs.collection(`Users/${this.ownerid}/cart`);
     this.notesCollection.add(item);
   }
   deleteFromCart(item: any){
     console.log(item.id);
-    this.itemDoc = this.afs.doc(`/Users/${this.userName}/cart/${item.id}`);
+    this.itemDoc = this.afs.doc(`/Users/${this.ownerid}/cart/${item.id}`);
     this.itemDoc.delete();
   }
+  removeBook(item: any){
+    console.log(item.id);
+    this.itemDoc = this.afs.doc(`/Items/${item.id}`);
+    this.itemDoc.delete();
+  }
+  sendNotification(){
+    this.notificationsCollection = this.afs.collection(`Users/${this.ownerid}/notification`);
+    
+    this.cartCollection = this.afs.collection(`Users/${this.ownerid}/cart`);
+    this.cart = this.cartCollection.snapshotChanges().pipe(map(changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as any;
+        data.id = a.payload.doc.id;
+        var senderNotify = this.afs.collection(`Users/${data.OwnerID}/notification`);
+        this.notificationsCollection.add({
+          buyer: this.ownerid,
+          sender: data.OwnerID,
+          item: data.Title,
+          displayMessage: "test",
+          id: data.id
+        });
+        senderNotify.add({
+          buyer: this.ownerid,
+          sender: data.OwnerID,
+          item: data.Title,
+          displayMessage: "test2",
+          id: data.id
+        });
+
+        this.itemDoc = this.afs.doc(`/Users/${this.ownerid}/cart/${data.id}`);
+        this.itemDoc.delete();
+        
+        return data;
+      });
+
+    }));
+  }
+
   AddSport(){
-    this.sportsCollection.add({
-      Title: this.newContent,
-      Sport: this.sport,
-      Description: this.description,
-      Weight: this.weight,
-      Price: this.price,
-      OwnerID: this.ownerid
-    })
+    if(this.newContent != "" && this.sport != "" && this.weight != 0 && this.description != "" && this.price != 0 && this.ownerid != ""){
+      this.sportsCollection.add({
+        id: this.id,
+        Title: this.newContent,
+        Sport: this.sport,
+        Description: this.description,
+        Weight: this.weight,
+        Price: this.price,
+        OwnerID: this.ownerid
+      })
+    }
     this.resetValues()
   }
   AddFurniture(){
-    this.furnitureCollection.add({
-      Title: this.newContent,
-      Category: this.category,
-      Color: this.color,
-      Dimension: this.dimension,
-      Description: this.description,
-      Weight: this.weight,
-      Price: this.price,
-      OwnerID: this.ownerid
-    })
+    if(this.newContent != "" && this.category != "" && this.color != "" && this.weight != 0 && this.dimension != "" && this.description != "" && this.price != 0 && this.ownerid != ""){
+      this.furnitureCollection.add({
+        id: this.id,
+        Title: this.newContent,
+        Category: this.category,
+        Color: this.color,
+        Dimension: this.dimension,
+        Description: this.description,
+        Weight: this.weight,
+        Price: this.price,
+        OwnerID: this.ownerid
+      })
+    }
     this.resetValues()
   }
-
   AddClothing(){
-    this.clothingCollection.add({
-      Title: this.newContent,
-      Category: this.category,
-      Color: this.color,
-      Size: this.size,
-      Description: this.description,
-      Price: this.price,
-      OwnerID: this.ownerid
-    })
+    if(this.newContent != "" && this.category != "" && this.color != "" && this.size != "" && this.description != "" && this.price != 0 && this.ownerid != ""){
+      this.clothingCollection.add({
+        id: this.id,
+        Title: this.newContent,
+        Category: this.category,
+        Color: this.color,
+        Size: this.size,
+        Description: this.description,
+        Price: this.price,
+        OwnerID: this.ownerid
+      })
+    }
     this.resetValues()
   }
 
   AddElectronic(){
-    this.electronicsCollection.add({
-      Title: this.newContent,
-      Category: this.category,
-      Model: this.model,
-      Dimension: this.dimension,
-      Description: this.description,
-      Weight: this.weight,
-      Price: this.price,
-      OwnerID: this.ownerid
-    })
+    if(this.newContent != "" && this.category != "" && this.model != "" && this.dimension != "" && this.description != "" && this.weight != 0 && this.price != 0 && this.ownerid != ""){
+      this.electronicsCollection.add({
+        id: this.id,
+        Title: this.newContent,
+        Category: this.category,
+        Model: this.model,
+        Dimension: this.dimension,
+        Description: this.description,
+        Weight: this.weight,
+        Price: this.price,
+        OwnerID: this.ownerid
+      })
+    }
     this.resetValues()
   }
 
   AddCredentials(){
     this.credentialsCollection.add({
+      id: this.id,
       UserName: this.userName,
       Password: this.password
     })

@@ -1,11 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppComponent } from '../app.component';
 import { FirebaseService } from '../services/firebase.service';
-
+interface Book {
+  Title: string
+  Course_Number: string
+  Edition: string
+  Description: string
+  Price: number
+  OwnerID: string
+  Image: any
+  id: string
+}
 @Component({
   selector: 'app-view-item',
   templateUrl: './view-item.component.html',
@@ -17,7 +27,7 @@ export class ViewItemComponent extends AppComponent {
   eedition = '';
   Ccourse_number = '';
   Ddescription = '';
-  Pprice = '';
+  Pprice = 0;
   Ssport = "";
   Wweight = 0;
   Ccolor = "";
@@ -27,8 +37,8 @@ export class ViewItemComponent extends AppComponent {
   Mmodel = "";
   type = "";
   edit = "";
-  constructor(public afs: AngularFirestore,public firebaseService: FirebaseService, private activatedRoute: ActivatedRoute) {
-    super(afs, firebaseService);
+  constructor(public afs: AngularFirestore,public firebaseService: FirebaseService, private activatedRoute: ActivatedRoute, public storage: AngularFireStorage) {
+    super(afs, firebaseService,storage);
     this.activatedRoute.queryParams.subscribe((data: any) =>{
       this.ttitle = data.title;
       this.eedition = data.edition;
@@ -53,7 +63,13 @@ export class ViewItemComponent extends AppComponent {
         return ref.where('Course_Number', '==' ,this.Ccourse_number).where('Title', '==' ,this.ttitle)
         .where('Edition', '==' ,this.eedition).where('Description', '==' ,this.Ddescription).where('Price', '==' ,this.Pprice)
       });
-      this.notes = this.notesCollection.valueChanges()
+      this.notes = this.notesCollection.snapshotChanges().pipe(map(changes => {
+        return changes.map(a => {
+          const data = a.payload.doc.data() as Book;
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      }));
       this.sports = new Observable<any[]>();
       this.furniture = new Observable<any[]>();
       this.clothing = new Observable<any[]>();
@@ -130,39 +146,20 @@ export class ViewItemComponent extends AppComponent {
       this.electronics = new Observable<any[]>();
     }
   }
-  getBookID(){
 
-    const citiesRef = this.afs.collection('Items', ref => {
-        return ref.where('Course_Number', '==' ,this.Ccourse_number).where('Title', '==' ,this.ttitle)
-        .where('Edition', '==' ,this.eedition).where('Description', '==' ,this.Ddescription).where('Price', '==' ,this.Pprice)
-      });
-    const snapshot = citiesRef.get();
+  updateBook(item: any){
+ 
+    this.itemDoc = this.afs.doc(`Items/${item.id}`);
 
-    snapshot.forEach(doc => {
-      console.log(doc.query.get());
-    });
-
-  }
-
-  updateBook(){
-    this.getBookID()
-   
-    // var noteDoc = this.afs.doc('Items/'+id)
-    // if(this.ttitle != ""){
-    //   noteDoc.update({Title: this.ttitle})
-    // }
-    // if(this.eedition != ""){
-    //   noteDoc.update({Edition: this.eedition})
-    // }
-    // if(this.Ccourse_number != ""){
-    //   noteDoc.update({Course_Number: this.Ccourse_number})
-    // }
-    // if(this.Ddescription != ""){
-    //   noteDoc.update({Description: this.Ddescription})
-    // }
-    // if(this.Pprice != ""){
-    //   noteDoc.update({Price: this.Pprice})
-    // }
+    if(this.ttitle != ""){
+      this.itemDoc.update({
+        Title: this.ttitle,
+        Edition: this.eedition,
+        Course_Number: this.Ccourse_number,
+        Description: this.Ddescription,
+        Price: this.Pprice
+      })
+    }
   }
   sportShow(){
     var x = document.getElementById("sport");
