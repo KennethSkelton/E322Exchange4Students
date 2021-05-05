@@ -1,3 +1,7 @@
+
+<h1 style='text-align:center'>My Cart</h1>
+
+
 <div class = "card-container" *ngFor="let note of (cart | async)">
     <div class = "card">
   
@@ -5,9 +9,12 @@
       Title: {{note.Title|json}}<br>
       OwnerID: {{note.OwnerID|json}}<br>
       Price: {{note.Price|json}}<br>
-      
+      <img [src]="note.Image">
     </div>
-    <button (click)="deleteFromCart(note)" class="btn red">Remove From Cart</button>
+    <button class= "button button1" (click)="deleteFromCart(note)">Remove From Cart</button>
    
   </div>
-  <button (click)="sendNotification()" class="btn red">Purchase</button>
+  <div class = "coolButtons">
+    <button  class= "button button1" (click)="sendNotification()">Purchase</button>
+  </div>
+  

@@ -5,7 +5,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { AngularFireStorage } from '@angular/fire/storage';
 import firebase from 'firebase';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { FirebaseService } from './services/firebase.service';
 
 interface Book {
@@ -26,6 +26,7 @@ interface Sport {
   Price : number
   Sport : string
   OwnerID: string
+  Image: any
   id: string
 }
 
@@ -38,6 +39,7 @@ interface Furniture {
   Weight : number
   Price : number
   OwnerID: string
+  Image: any
   id: string
 }
 
@@ -49,6 +51,7 @@ interface Clothing {
   Size : string 
   Price : number
   OwnerID: string
+  Image: any
   id: string
 }
 
@@ -61,6 +64,7 @@ interface Electronic {
   Weight : number
   Price : number
   OwnerID: string
+  Image: any
   id: string
 }
 
@@ -294,26 +298,36 @@ export class AppComponent implements OnInit {
   //   const filePath = 'name-your-file-path-here';
   //   const task = this.afs.collection.add(filePath, file);
   // }
-
-  AddBook(){
+  AddBookh(values: any){
+    this.notesCollection.add({
+      id: this.id,
+      Title: values['title'],
+      Course_Number: values['course'],
+      Edition: values['edition'],
+      Description:values['descrip'],
+      Price: values['price'] ,
+      OwnerID: this.ownerid,
+      Image: values['image']
+    })
+  }
+  AddBook($event:any){
     if(this.newContent != "" && this.newCourseNumbers != "" && this.edition != "" && this.description != "" && this.price != 0 && this.ownerid != ""){
-      this.notesCollection.add({
-        id: this.id,
-        Title: this.newContent,
-        Course_Number: this.newCourseNumbers,
-        Edition: this.edition,
-        Description: this.description,
-        Price: this.price,
-        OwnerID: this.ownerid,
-        Image: this.image
-      }).then(docRef => {
-        this.storage.upload(`/files/${docRef.id}`, this.image).then(() => {
-        
-        });
-  
-      }, err => {
-        console.error(err);
-      });
+      this.posts['title'] = this.newContent
+      this.posts['course'] = this.newCourseNumbers
+      this.posts['edition'] = this.edition
+      this.posts['descrip'] = this.description
+      this.posts['price'] = this.price
+      var filepath = this.image
+      const fileref = this.storage.ref(filepath)
+      this.storage.upload(filepath, this.path).snapshotChanges().pipe(
+        finalize(()=>{
+            fileref.getDownloadURL().subscribe((url)=>{
+              console.log(url);
+              this.posts['image'] = url;
+              this.AddBookh(this.posts);
+            })
+        })
+      ).subscribe();
     }
     else{
       console.log("You left empty inputs!")
@@ -321,6 +335,7 @@ export class AppComponent implements OnInit {
     }
     this.resetValues()
   }
+
   deleteItem(item: any){
     console.log(item.id);
     this.itemDoc = this.afs.doc(`Items/${item.id}`);
@@ -338,6 +353,26 @@ export class AppComponent implements OnInit {
   removeBook(item: any){
     console.log(item.id);
     this.itemDoc = this.afs.doc(`/Items/${item.id}`);
+    this.itemDoc.delete();
+  }
+  removeSport(item: any){
+    console.log(item.id);
+    this.itemDoc = this.afs.doc(`/Sports/${item.id}`);
+    this.itemDoc.delete();
+  }
+  removeFurniture(item: any){
+    console.log(item.id);
+    this.itemDoc = this.afs.doc(`/Furniture/${item.id}`);
+    this.itemDoc.delete();
+  }
+  removeClothing(item: any){
+    console.log(item.id);
+    this.itemDoc = this.afs.doc(`/Clothing/${item.id}`);
+    this.itemDoc.delete();
+  }
+  removeElectronic(item: any){
+    console.log(item.id);
+    this.itemDoc = this.afs.doc(`/Electronic/${item.id}`);
     this.itemDoc.delete();
   }
   sendNotification(){
@@ -373,65 +408,169 @@ export class AppComponent implements OnInit {
     }));
   }
 
-  AddSport(){
+  AddSporth(values: any){
+    this.sportsCollection.add({
+      id: this.id,
+      Title : values['title'],
+      Description : values['description'],
+      Weight : values['weight'],
+      Price : values['price'],
+      Sport : values['sport'],
+      OwnerID: this.ownerid,
+      Image: values['image']
+    })
+  }
+
+  AddSport($event:any){
     if(this.newContent != "" && this.sport != "" && this.weight != 0 && this.description != "" && this.price != 0 && this.ownerid != ""){
-      this.sportsCollection.add({
-        id: this.id,
-        Title: this.newContent,
-        Sport: this.sport,
-        Description: this.description,
-        Weight: this.weight,
-        Price: this.price,
-        OwnerID: this.ownerid
-      })
+      this.posts['title'] = this.newContent
+      this.posts['description'] = this.description
+      this.posts['weight'] = this.weight
+      this.posts['sport'] = this.sport
+      this.posts['price'] = this.price
+      var filepath = this.image
+      const fileref = this.storage.ref(filepath)
+      this.storage.upload(filepath, this.path).snapshotChanges().pipe(
+        finalize(()=>{
+            fileref.getDownloadURL().subscribe((url)=>{
+              console.log(url);
+              this.posts['image'] = url;
+              this.AddSporth(this.posts);
+            })
+        })
+      ).subscribe();
     }
-    this.resetValues()
-  }
-  AddFurniture(){
-    if(this.newContent != "" && this.category != "" && this.color != "" && this.weight != 0 && this.dimension != "" && this.description != "" && this.price != 0 && this.ownerid != ""){
-      this.furnitureCollection.add({
-        id: this.id,
-        Title: this.newContent,
-        Category: this.category,
-        Color: this.color,
-        Dimension: this.dimension,
-        Description: this.description,
-        Weight: this.weight,
-        Price: this.price,
-        OwnerID: this.ownerid
-      })
-    }
-    this.resetValues()
-  }
-  AddClothing(){
-    if(this.newContent != "" && this.category != "" && this.color != "" && this.size != "" && this.description != "" && this.price != 0 && this.ownerid != ""){
-      this.clothingCollection.add({
-        id: this.id,
-        Title: this.newContent,
-        Category: this.category,
-        Color: this.color,
-        Size: this.size,
-        Description: this.description,
-        Price: this.price,
-        OwnerID: this.ownerid
-      })
+    else{
+      console.log("You left empty inputs!")
+      /*add message on screen for user */
     }
     this.resetValues()
   }
 
-  AddElectronic(){
+  AddFurnitureh(values: any){
+    this.furnitureCollection.add({
+      id: this.id,
+      Title : values['title'],
+      Description : values['description'],
+      Weight : values['weight'],
+      Price : values['price'],
+      Category : values['category'],
+      Color : values['color'],
+      Dimension : values['dimension'],
+      OwnerID: this.ownerid,
+      Image: values['image']
+    })
+  }
+
+  AddFurniture($event:any){
+    if(this.newContent != "" && this.category != "" && this.color != "" && this.weight != 0 && this.dimension != "" && this.description != "" && this.price != 0 && this.ownerid != ""){
+      this.posts['title'] = this.newContent
+      this.posts['description'] = this.description
+      this.posts['weight'] = this.weight
+      this.posts['price'] = this.price
+      this.posts['category'] = this.category
+      this.posts['color'] = this.color
+      this.posts['dimension'] = this.dimension
+      var filepath = this.image
+      const fileref = this.storage.ref(filepath)
+      this.storage.upload(filepath, this.path).snapshotChanges().pipe(
+        finalize(()=>{
+            fileref.getDownloadURL().subscribe((url)=>{
+              console.log(url);
+              this.posts['image'] = url;
+              this.AddFurnitureh(this.posts);
+            })
+        })
+      ).subscribe();
+    }
+    else{
+      console.log("You left empty inputs!")
+      /*add message on screen for user */
+    }
+    this.resetValues()
+  }
+
+  AddClothingh(values:any){
+    this.clothingCollection.add({
+      id: this.id,
+      Title : values['title'],
+      Description : values['description'],
+      Price : values['price'],
+      Category : values['category'],
+      Color : values['color'],
+      Size : values['size'],
+      OwnerID: this.ownerid,
+      Image: values['image']
+    })
+  }
+
+  AddClothing($event:any){
+    if(this.newContent != "" && this.category != "" && this.color != "" && this.size != "" && this.description != "" && this.price != 0 && this.ownerid != ""){
+      this.posts['title'] = this.newContent
+      this.posts['description'] = this.description
+      this.posts['weight'] = this.weight
+      this.posts['price'] = this.price
+      this.posts['category'] = this.category
+      this.posts['color'] = this.color
+      this.posts['size'] = this.size
+      var filepath = this.image
+      const fileref = this.storage.ref(filepath)
+      this.storage.upload(filepath, this.path).snapshotChanges().pipe(
+        finalize(()=>{
+            fileref.getDownloadURL().subscribe((url)=>{
+              console.log(url);
+              this.posts['image'] = url;
+              this.AddClothingh(this.posts);
+            })
+        })
+      ).subscribe();
+    }
+    else{
+      console.log("You left empty inputs!")
+      /*add message on screen for user */
+    }
+    this.resetValues()
+  }
+
+  AddElectronich(values:any){
+    this.electronicsCollection.add({
+      id: this.id,
+      Title : values['title'],
+      Description : values['description'],
+      Price : values['price'],
+      Category : values['category'],
+      Model : values['model'],
+      Dimension : values['dimension'],
+      OwnerID: this.ownerid,
+      Image: values['image'],
+      Weight: values['weight']
+    })
+  }
+
+  AddElectronic($event:any){
     if(this.newContent != "" && this.category != "" && this.model != "" && this.dimension != "" && this.description != "" && this.weight != 0 && this.price != 0 && this.ownerid != ""){
-      this.electronicsCollection.add({
-        id: this.id,
-        Title: this.newContent,
-        Category: this.category,
-        Model: this.model,
-        Dimension: this.dimension,
-        Description: this.description,
-        Weight: this.weight,
-        Price: this.price,
-        OwnerID: this.ownerid
-      })
+      this.posts['title'] = this.newContent
+      this.posts['description'] = this.description
+      this.posts['weight'] = this.weight
+      this.posts['price'] = this.price
+      this.posts['category'] = this.category
+      this.posts['model'] = this.model
+      this.posts['dimension'] = this.dimension
+      var filepath = this.image
+      const fileref = this.storage.ref(filepath)
+      this.storage.upload(filepath, this.path).snapshotChanges().pipe(
+        finalize(()=>{
+            fileref.getDownloadURL().subscribe((url)=>{
+              console.log(url);
+              this.posts['image'] = url;
+              this.AddElectronich(this.posts);
+            })
+        })
+      ).subscribe();
+    }
+    else{
+      console.log("You left empty inputs!")
+      /*add message on screen for user */
     }
     this.resetValues()
   }

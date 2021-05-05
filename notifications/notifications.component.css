@@ -79,3 +79,9 @@
   .card.card.highlight-card span {
     margin-left: 60px;
   }
+  h1{
+      justify-content: center;
+      text-align: center;
+      font-size: 48px;
+      
+  }

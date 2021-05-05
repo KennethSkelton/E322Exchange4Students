@@ -1,6 +1,8 @@
 
-<div *ngFor="let note of (notes | async)">
-    
+<div class="grid-wrapper">
+
+  <div *ngFor="let note of (notes | async)">
+      
     <div [routerLink]="['/view-item']" [queryParams]="{title:note.Title,edition:note.Edition,
         course_number:note.Course_Number,description:note.Description,price:note.Price,type:'Book',edit:'True'}" class = "card">
       Book <br>
@@ -9,13 +11,14 @@
       Course Number: {{note.Course_Number|json}}<br>
       Description: {{note.Description|json}}<br>
       Price: {{note.Price|json}}<br>
+      <img [src]="note.Image">
     </div>
   </div>
- 
+  
 
-      
+        
   <div *ngFor="let sport of (sports | async)">
-   
+    
       <div [routerLink]="['/view-item']" [queryParams]="{title:sport.Title,sport:sport.Sport,weight:sport.Weight,
         description:sport.Description,price:sport.Price,type:'Sport',edit:'True'}" class = "card">
         Sport <br>
@@ -24,55 +27,60 @@
         Weight: {{sport.Weight|json}}<br>
         Description: {{sport.Description|json}}<br>
         Price: {{sport.Price|json}}<br>
+        <img [src]="sport.Image">
       </div>
   </div>
 
-      
-      <div  *ngFor="let furn of (furniture | async)">
-       
-          <div [routerLink]="['/view-item']" [queryParams]="{title:furn.Title,category:furn.Category,weight:furn.Weight,
-            color:furn.Color,dimension:furn.Dimension,description:furn.Description,price:furn.Price,type:'Furniture',edit:'True'}" class = "card">
-            Furniture <br>
-            Title: {{furn.Title|json}}<br>
-            Category: {{furn.Category|json}}<br>
-            Weight: {{furn.Weight|json}}<br>
-            Color: {{furn.Color|json}}<br>
-            Dimensions: {{furn.Dimension|json}}<br>
-            Description: {{furn.Description|json}}<br>
-            Price: {{furn.Price|json}}<br>
-          </div>
+        
+  <div *ngFor="let furn of (furniture | async)">
+    
+      <div [routerLink]="['/view-item']" [queryParams]="{title:furn.Title,category:furn.Category,weight:furn.Weight,
+        color:furn.Color,dimension:furn.Dimension,description:furn.Description,price:furn.Price,type:'Furniture',edit:'True'}" class = "card">
+        Furniture <br>
+        Title: {{furn.Title|json}}<br>
+        Category: {{furn.Category|json}}<br>
+        Weight: {{furn.Weight|json}}<br>
+        Color: {{furn.Color|json}}<br>
+        Dimensions: {{furn.Dimension|json}}<br>
+        Description: {{furn.Description|json}}<br>
+        Price: {{furn.Price|json}}<br>
+        <img [src]="furn.Image">
       </div>
+  </div>
 
-      
-      <div *ngFor="let cloth of (clothing | async)">
-       
-          <div [routerLink]="['/view-item']" [queryParams]="{title:cloth.Title,category:cloth.Category,
-            size:cloth.Size,color:cloth.Color,description:cloth.Description,price:cloth.Price,type:'Clothing',edit:'True'}" class = "card">
-            Clothing <br>
-            Title: {{cloth.Title|json}}<br>
-            Category: {{cloth.Category|json}}<br>
-            Size: {{cloth.Size|json}}<br>
-            Color: {{cloth.Color|json}}<br>
-            Description: {{cloth.Description|json}}<br>
-            Price: {{cloth.Price|json}}<br>
-          </div>
+    
+  <div *ngFor="let cloth of (clothing | async)">
+    
+      <div [routerLink]="['/view-item']" [queryParams]="{title:cloth.Title,category:cloth.Category,
+        size:cloth.Size,color:cloth.Color,description:cloth.Description,price:cloth.Price,type:'Clothing',edit:'True'}" class = "card">
+        Clothing <br>
+        Title: {{cloth.Title|json}}<br>
+        Category: {{cloth.Category|json}}<br>
+        Size: {{cloth.Size|json}}<br>
+        Color: {{cloth.Color|json}}<br>
+        Description: {{cloth.Description|json}}<br>
+        Price: {{cloth.Price|json}}<br>
+        <img [src]="cloth.Image">
       </div>
+  </div>
 
-      
-      <div *ngFor="let elect of (electronics | async)">
-       
-          <div [routerLink]="['/view-item']" [queryParams]="{title:elect.Title,category: elect.Category,
-            dimension:elect.Dimension,model:elect.Model,weight:elect.Weight,description:elect.Description,price:elect.Price,type:'Electronic',edit:'True'}" class = "card">
-            Electronic <br>
-            Title: {{elect.Title|json}}<br>
-            Category: {{elect.Category|json}}<br>
-            Dimension: {{elect.Dimension|json}}<br>
-            Model: {{elect.Model|json}}<br>
-            Weight: {{elect.Weight|json}}<br>
-            Description: {{elect.Description|json}}<br>
-            Price: {{elect.Price|json}}<br>
-          </div>
+    
+  <div *ngFor="let elect of (electronics | async)">
+    
+      <div [routerLink]="['/view-item']" [queryParams]="{title:elect.Title,category: elect.Category,
+        dimension:elect.Dimension,model:elect.Model,weight:elect.Weight,description:elect.Description,price:elect.Price,type:'Electronic',edit:'True'}" class = "card">
+        Electronic <br>
+        Title: {{elect.Title|json}}<br>
+        Category: {{elect.Category|json}}<br>
+        Dimension: {{elect.Dimension|json}}<br>
+        Model: {{elect.Model|json}}<br>
+        Weight: {{elect.Weight|json}}<br>
+        Description: {{elect.Description|json}}<br>
+        Price: {{elect.Price|json}}<br>
+        <img [src]="elect.Image">
       </div>
+  </div>
+</div>
 
 
 

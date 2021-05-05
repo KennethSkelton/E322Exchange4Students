@@ -16,6 +16,54 @@ interface Book {
   Image: any
   id: string
 }
+interface Sport {
+  Title : string
+  Description : string
+  Weight : number
+  Price : number
+  Sport : string
+  OwnerID: string
+  Image: any
+  id: string
+}
+
+interface Furniture {
+  Title : string 
+  Description : string
+  Category : string 
+  Color : string
+  Dimension : string
+  Weight : number
+  Price : number
+  OwnerID: string
+  Image: any
+  id: string
+}
+
+interface Clothing {
+  Title : string 
+  Description : string 
+  Category : string 
+  Color : string 
+  Size : string 
+  Price : number
+  OwnerID: string
+  Image: any
+  id: string
+}
+
+interface Electronic {
+  Title : string 
+  Description : string 
+  Category : string 
+  Model : string 
+  Dimension : string 
+  Weight : number
+  Price : number
+  OwnerID: string
+  Image: any
+  id: string
+}
 @Component({
   selector: 'app-view-item',
   templateUrl: './view-item.component.html',
@@ -84,7 +132,13 @@ export class ViewItemComponent extends AppComponent {
         .where('Sport', '==' ,this.Ssport).where('Description', '==' ,this.Ddescription).where('Price', '==' ,this.Pprice)
       });
       this.notes = new Observable<any[]>();
-      this.sports = this.sportsCollection.valueChanges()
+      this.sports = this.sportsCollection.snapshotChanges().pipe(map(changes => {
+        return changes.map(a => {
+          const data = a.payload.doc.data() as Sport;
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      }));
       this.furniture = new Observable<any[]>();
       this.clothing = new Observable<any[]>();
       this.electronics = new Observable<any[]>();
@@ -100,7 +154,13 @@ export class ViewItemComponent extends AppComponent {
       });
       this.notes = new Observable<any[]>();
       this.sports = new Observable<any[]>();
-      this.furniture = this.furnitureCollection.valueChanges()
+      this.furniture = this.furnitureCollection.snapshotChanges().pipe(map(changes => {
+        return changes.map(a => {
+          const data = a.payload.doc.data() as Furniture;
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      }));
       this.clothing = new Observable<any[]>();
       this.electronics = new Observable<any[]>();
       if(this.edit == 'True'){
@@ -116,7 +176,13 @@ export class ViewItemComponent extends AppComponent {
       this.notes = new Observable<any[]>();
       this.sports = new Observable<any[]>();
       this.furniture = new Observable<any[]>();
-      this.clothing = this.clothingCollection.valueChanges()
+      this.clothing = this.clothingCollection.snapshotChanges().pipe(map(changes => {
+        return changes.map(a => {
+          const data = a.payload.doc.data() as Clothing;
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      }));
       this.electronics = new Observable<any[]>();
       if(this.edit == 'True'){
         this.clothingShow();
@@ -132,7 +198,13 @@ export class ViewItemComponent extends AppComponent {
       this.sports = new Observable<any[]>();
       this.furniture = new Observable<any[]>();
       this.clothing = new Observable<any[]>();
-      this.electronics = this.electronicsCollection.valueChanges()
+      this.electronics = this.electronicsCollection.snapshotChanges().pipe(map(changes => {
+        return changes.map(a => {
+          const data = a.payload.doc.data() as Electronic;
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      }));
       if(this.edit == 'True'){
         this.electronicShow();
       }
@@ -161,6 +233,70 @@ export class ViewItemComponent extends AppComponent {
       })
     }
   }
+
+  updateSport(item: any){
+ 
+    this.itemDoc = this.afs.doc(`Sports/${item.id}`);
+
+    if(this.ttitle != ""){
+      this.itemDoc.update({
+        Title: this.ttitle,
+        Sport: this.Ssport,
+        Weight: this.Wweight,
+        Description: this.Ddescription,
+        Price: this.Pprice
+      })
+    }
+  }
+
+  updateFurniture(item: any){
+ 
+    this.itemDoc = this.afs.doc(`Furniture/${item.id}`);
+
+    if(this.ttitle != ""){
+      this.itemDoc.update({
+        Title: this.ttitle,
+        Dimension: this.Ddimension,
+        Weight: this.Wweight,
+        Description: this.Ddescription,
+        Price: this.Pprice,
+        Category: this.Ccategory,
+        Color: this.Ccolor
+      })
+    }
+  }
+  updateClothing(item: any){
+ 
+    this.itemDoc = this.afs.doc(`CLothing/${item.id}`);
+
+    if(this.ttitle != ""){
+      this.itemDoc.update({
+        Title: this.ttitle,
+        Size: this.Ssize,
+        Description: this.Ddescription,
+        Price: this.Pprice,
+        Category: this.Ccategory,
+        Color: this.Ccolor,
+      })
+    }
+  }
+
+  updateElectronic(item: any){
+    this.itemDoc = this.afs.doc(`Electronic/${item.id}`);
+
+    if(this.ttitle != ""){
+      this.itemDoc.update({
+        Title: this.ttitle,
+        Dimension: this.Ddimension,
+        Description: this.Ddescription,
+        Price: this.Pprice,
+        Category: this.Ccategory,
+        Model: this.Mmodel,
+        Weight: this.Wweight
+      })
+    }
+  }
+
   sportShow(){
     var x = document.getElementById("sport");
     if (x != null){

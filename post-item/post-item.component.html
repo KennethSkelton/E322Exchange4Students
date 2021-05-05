@@ -1,158 +1,169 @@
 <style>
-#sport {
+  #sport {
     display: none
-}
-#book {
+  }
+
+  #book {
     display: none
-}
-#furniture {
+  }
+
+  #furniture {
     display: none
-}
-#clothing {
+  }
+
+  #clothing {
     display: none
-}
-#electronic {
+  }
+
+  #electronic {
     display: none
-}
+  }
 </style>
 
 <h1>Post An Item</h1>
 
+<p class="coolButtons">
+  <button (click)="bookShow()" class="icon icon-book" id="bookButton">Book</button>
+  <button (click)="sportShow()" class="icon icon-sport" id="sportButton">Sport</button>
+  <button (click)="furnitureShow()" class="icon icon-furn" id="furnButton">Furniture</button>
+  <button (click)="clothingShow()" class="icon icon-cloth" id="clothButton">Clothing</button>
+  <button (click)="electronicShow()" class="icon icon-elect" id="electButton">Electronic</button>
+</p>
 
-    <button (click)= "bookShow()" class="icon icon-book" id = "bookButton">Book</button>
-    <button (click)= "sportShow()"class="icon icon-sport"id = "sportButton">Sport</button>
-    <button (click)= "furnitureShow()"class="icon icon-furn"id = "furnButton">Furniture</button>
-    <button (click)= "clothingShow()"class="icon icon-cloth"id = "clothButton">Clothing</button>
-    <button (click)= "electronicShow()"class="icon icon-elect"id = "electButton">Electronic</button>
-  
-
-  <div id = "book" class = "card-container">
-    <div id = "bookDisplay" class = "card">
-        Book Title: {{newContent}}<br>
-        Course Number: {{newCourseNumbers}}<br>
-        Edition: {{edition}}<br>
-        Description: {{description}}<br>
-        Price: {{price}}<br>
-        <img #myImage src="#" id="output_image"/>
-    </div>
-      Book Title:
-      <input [(ngModel)]= "newContent"> <br>
-      Course Number:
-      <input [(ngModel)]= "newCourseNumbers"><br>
-      Edition:
-      <input [(ngModel)]= "edition"><br>
-      Description:
-      <input [(ngModel)]= "description"><br>
-      Price:
-      <input [(ngModel)]= "price"><br>
-      Image:
-      <input type="file" accept=".png" (change)="upload($event)" ><br>
-      
-    <button (click)= "AddBook()" id='submit'>Add to store</button>
-    
+<div id="book" class="card-container">
+  <div id="bookDisplay" class="card">
+    Book Title: {{newContent}}<br>
+    Course Number: {{newCourseNumbers}}<br>
+    Edition: {{edition}}<br>
+    Description: {{description}}<br>
+    Price: {{price}}<br>
+    <img #myImage src="#" id="output_image" />
   </div>
+  Book Title:
+  <input [(ngModel)]="newContent"> <br>
+  Course Number:
+  <input [(ngModel)]="newCourseNumbers"><br>
+  Edition:
+  <input [(ngModel)]="edition"><br>
+  Description:
+  <input [(ngModel)]="description"><br>
+  Price:
+  <input [(ngModel)]="price"><br>
+  Image:
+  <input type="file" accept=".png" (change)="upload($event)"><br>
+
+  <button (click)="AddBook([]); resetImage()" id='submit'>Add to store</button>
+
+</div>
 
 
-  <div id = "sport" class = "card-container">
-    <div id = "sportDisplay" class = "card">
-      Title: {{newContent}}<br>
-      Sport: {{sport}}<br>
-      Weight: {{weight}}<br>
-      Description: {{description}}<br>
-      Price: {{price}}<br>
-    </div>
-      Title:
-      <input [(ngModel)]= "newContent"><br>
-      Sport:
-      <input [(ngModel)]= "sport"><br>
-      Weight:
-      <input [(ngModel)]= "weight"><br>
-      Description:
-      <input [(ngModel)]= "description"><br>
-      Price:
-      <input [(ngModel)]= "price"><br>
-    
-    <button (click)= "AddSport()" id='submit'>Add to store</button>
+<div id="sport" class="card-container">
+  <div id="sportDisplay" class="card">
+    Title: {{newContent}}<br>
+    Sport: {{sport}}<br>
+    Weight: {{weight}}<br>
+    Description: {{description}}<br>
+    Price: {{price}}<br>
+    <img #myImageS src="#" id="output_image" />
   </div>
+  Title:
+  <input [(ngModel)]="newContent"><br>
+  Sport:
+  <input [(ngModel)]="sport"><br>
+  Weight:
+  <input [(ngModel)]="weight"><br>
+  Description:
+  <input [(ngModel)]="description"><br>
+  Price:
+  <input [(ngModel)]="price"><br>
+  Image:
+  <input type="file" accept=".png" (change)="uploadS($event)"><br>
+  <button (click)="AddSport([]); resetImage()" id='submit'>Add to store</button>
+</div>
 
-  <div id = "furniture" class = "card-container">
-    <div id = "furnDisplay" class = "card">
-      Title: {{newContent}}<br>
-      Category: {{category}}<br>
-      Dimensions: {{dimension}}<br>
-      Color: {{color}}<br>
-      Description: {{description}}<br>
-      Weight: {{weight}}<br>
-      Price: {{price}}<br>
-    </div>
-      Furniture Title:
-      <input [(ngModel)]= "newContent"><br>
-      Category:
-      <input [(ngModel)]= "category"><br>
-      Dimensions:
-      <input [(ngModel)]= "dimension"><br>
-      Color:
-      <input [(ngModel)]= "color"><br>
-      Description:
-      <input [(ngModel)]= "description"><br>
-      Weight:
-      <input [(ngModel)]= "weight"><br>
-      Price:
-      <input [(ngModel)]= "price"><br>
-    
-    <button (click)= "AddFurniture()" id='submit'>Add to store</button>
+<div id="furniture" class="card-container">
+  <div id="furnDisplay" class="card">
+    Title: {{newContent}}<br>
+    Category: {{category}}<br>
+    Dimensions: {{dimension}}<br>
+    Color: {{color}}<br>
+    Description: {{description}}<br>
+    Weight: {{weight}}<br>
+    Price: {{price}}<br>
+    <img #myImageF src="#" id="output_image" />
   </div>
+  Furniture Title:
+  <input [(ngModel)]="newContent"><br>
+  Category:
+  <input [(ngModel)]="category"><br>
+  Dimensions:
+  <input [(ngModel)]="dimension"><br>
+  Color:
+  <input [(ngModel)]="color"><br>
+  Description:
+  <input [(ngModel)]="description"><br>
+  Weight:
+  <input [(ngModel)]="weight"><br>
+  Price:
+  <input [(ngModel)]="price"><br>
+  Image:
+  <input type="file" accept=".png" (change)="uploadF($event)"><br>
+  <button (click)="AddFurniture([]); resetImage" id='submit'>Add to store</button>
+</div>
 
-  <div id = "clothing" class = "card-container">
-    <div id = "clothDisplay" class = "card">
-      Title: {{newContent}}<br>
-      Category: {{category}}<br>
-      Color: {{color}}<br>
-      Size: {{size}}<br>
-      Description: {{description}}<br>
-      Price: {{price}}<br>
-    </div>
-      Clothing Title:
-      <input [(ngModel)]= "newContent"><br>
-      Category:
-      <input [(ngModel)]= "category"><br>
-      Color:
-      <input [(ngModel)]= "color"><br>
-      Size:
-      <input [(ngModel)]= "size"><br>
-      Description:
-      <input [(ngModel)]= "description"><br>
-      Price:
-      <input [(ngModel)]= "price"><br>
-    
-    <button (click)= "AddClothing()" id='submit'>Add to store</button>
+<div id="clothing" class="card-container">
+  <div id="clothDisplay" class="card">
+    Title: {{newContent}}<br>
+    Category: {{category}}<br>
+    Color: {{color}}<br>
+    Size: {{size}}<br>
+    Description: {{description}}<br>
+    Price: {{price}}<br>
+    <img #myImageC src="#" id="output_image" />
   </div>
+  Clothing Title:
+  <input [(ngModel)]="newContent"><br>
+  Category:
+  <input [(ngModel)]="category"><br>
+  Color:
+  <input [(ngModel)]="color"><br>
+  Size:
+  <input [(ngModel)]="size"><br>
+  Description:
+  <input [(ngModel)]="description"><br>
+  Price:
+  <input [(ngModel)]="price"><br>
+  Image:
+  <input type="file" accept=".png" (change)="uploadC($event)"><br>
+  <button (click)="AddClothing([]); resetImage" id='submit'>Add to store</button>
+</div>
 
-  <div id = "electronic" class = "card-container">
-    <div id = "electDisplay" class = "card">
-      Title: {{newContent}}<br>
-      Category: {{category}}<br>
-      Model: {{model}}<br>
-      Dimensions: {{dimension}}<br>
-      Weight: {{weight}}<br>
-      Description: {{description}}<br>
-      Price: {{price}}<br>
-    </div>
-      Electronic Title:
-      <input [(ngModel)]= "newContent"><br>
-      Category:
-      <input [(ngModel)]= "category"><br>
-      Model:
-      <input [(ngModel)]= "model"><br>
-      Dimensions:
-      <input [(ngModel)]= "dimension"><br>
-      Weight:
-      <input [(ngModel)]= "weight"><br>
-      Description:
-      <input [(ngModel)]= "description"><br>
-      Price:
-      <input [(ngModel)]= "price"><br>
-    
-    <button (click)= "AddElectronic()" id='submit'>Add to store</button>
+<div id="electronic" class="card-container">
+  <div id="electDisplay" class="card">
+    Title: {{newContent}}<br>
+    Category: {{category}}<br>
+    Model: {{model}}<br>
+    Dimensions: {{dimension}}<br>
+    Weight: {{weight}}<br>
+    Description: {{description}}<br>
+    Price: {{price}}<br>
+    <img #myImageE src="#" id="output_image" />
   </div>
-
+  Electronic Title:
+  <input [(ngModel)]="newContent"><br>
+  Category:
+  <input [(ngModel)]="category"><br>
+  Model:
+  <input [(ngModel)]="model"><br>
+  Dimensions:
+  <input [(ngModel)]="dimension"><br>
+  Weight:
+  <input [(ngModel)]="weight"><br>
+  Description:
+  <input [(ngModel)]="description"><br>
+  Price:
+  <input [(ngModel)]="price"><br>
+  Image:
+  <input type="file" accept=".png" (change)="uploadE($event)"><br>
+  <button (click)="AddElectronic([]); resetImage" id='submit'>Add to store</button>
+</div>
